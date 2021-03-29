@@ -1,4 +1,4 @@
-package home.project.group.financetracker.ui.notifications;
+package home.project.group.financetracker.ui.calendar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import home.project.group.financetracker.R;
 
-public class NotificationsFragment extends Fragment {
+public class CalendarFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private CalendarViewModel calendarViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        calendarViewModel =
+                ViewModelProviders.of(this).get(CalendarViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_calendar, container, false);
+        final TextView textView = root.findViewById(R.id.text_calendar);
+        calendarViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
