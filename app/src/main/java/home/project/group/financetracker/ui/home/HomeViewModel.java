@@ -10,7 +10,7 @@ public class HomeViewModel extends ViewModel {
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Welcome to the Budget Tracker App!"); //New content
+        mText.setValue("Welcome to the Budget Tracker App! fff"); //New content
     }
 
     public LiveData<String> getText() {
