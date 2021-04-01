@@ -1,16 +1,16 @@
-package home.project.group.financetracker.ui.dashboard;
+package home.project.group.financetracker.ui.transaction;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class TransactionViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public TransactionViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is the transaction fragment");
     }
 
     public LiveData<String> getText() {
