@@ -14,7 +14,7 @@ public class ExpenseTransactionModel {
     private String expenseName;
 
     @ColumnInfo(name = "amount")
-    private int amount;
+    private String amount;
 
     @ColumnInfo(name = "category")
     private String category;
@@ -38,11 +38,11 @@ public class ExpenseTransactionModel {
         this.expenseName = expenseName;
     }
 
-    public int getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

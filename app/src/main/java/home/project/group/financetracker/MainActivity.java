@@ -1,6 +1,10 @@
 package home.project.group.financetracker;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -10,7 +14,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
+
 public class MainActivity extends AppCompatActivity {
+
+    EditText expenseName, amount, category;
+    Button save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +34,38 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        expenseName = findViewById(R.id.txtExpenseName);
+        amount = findViewById(R.id.txtAmount);
+        category = findViewById(R.id.txtCategory);
+        save = findViewById(R.id.btnSave);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
+
+    private void saveData() {
+        String expenseName_txt = expenseName.getText().toString().trim();
+        String amount_txt = amount.getText().toString().trim();
+        String category_txt = category.getText().toString().trim();
+
+        if (expenseName_txt != null && amount_txt != null && category_txt != null) {
+
+            ExpenseTransactionModel model = new ExpenseTransactionModel();
+
+            model.setExpenseName(expenseName_txt);
+            model.setAmount(amount_txt);
+            model.setCategory(category_txt);
+
+            DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllData(model);
+
+            Toast.makeText(this, "Data successfully saved", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }
