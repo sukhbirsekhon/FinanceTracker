@@ -6,14 +6,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import home.project.group.financetracker.Dao.DaoClass;
+import home.project.group.financetracker.Dao.TransactionDao;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 
 @Database(entities = {ExpenseTransactionModel.class, RevenueTransactionModel.class}, version = 2)
 public abstract class DatabaseClass extends RoomDatabase {
 
-    public abstract DaoClass getDao();
+    public abstract TransactionDao getDao();
 
     private static DatabaseClass instance;
 

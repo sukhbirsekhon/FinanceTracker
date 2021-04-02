@@ -10,7 +10,7 @@ import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 
 @Dao
-public interface DaoClass {
+public interface TransactionDao {
 
     @Insert
     void insertAllExpenseData(ExpenseTransactionModel model);
