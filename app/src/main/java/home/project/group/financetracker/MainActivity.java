@@ -70,9 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllExpenseData(model);
 
-        expenseName.setText("");
-        amount.setText("");
-        category.setText("");
         Toast.makeText(this, "Data successfully saved", Toast.LENGTH_SHORT).show();
     }
 
