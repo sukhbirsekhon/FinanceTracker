@@ -1,5 +1,6 @@
 package home.project.group.financetracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +20,7 @@ import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 public class MainActivity extends AppCompatActivity {
 
     EditText expenseName, amount, category;
-    Button save;
+    Button save, getData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
         amount = findViewById(R.id.txtAmount);
         category = findViewById(R.id.txtCategory);
         save = findViewById(R.id.btnSave);
+        getData = findViewById(R.id.btnGetData);
+
+        getData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), GetData.class));
+            }
+        });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,18 +62,19 @@ public class MainActivity extends AppCompatActivity {
         String amount_txt = amount.getText().toString().trim();
         String category_txt = category.getText().toString().trim();
 
-        if (expenseName_txt != null && amount_txt != null && category_txt != null) {
+        ExpenseTransactionModel model = new ExpenseTransactionModel();
 
-            ExpenseTransactionModel model = new ExpenseTransactionModel();
+        model.setExpenseName(expenseName_txt);
+        model.setAmount(amount_txt);
+        model.setCategory(category_txt);
 
-            model.setExpenseName(expenseName_txt);
-            model.setAmount(amount_txt);
-            model.setCategory(category_txt);
+        DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllData(model);
 
-            DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllData(model);
+        expenseName.setText("");
+        amount.setText("");
+        category.setText("");
+        Toast.makeText(this, "Data successfully saved", Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(this, "Data successfully saved", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
