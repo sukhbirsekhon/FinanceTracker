@@ -67,7 +67,7 @@
         android:layout_marginTop="106dp"
         android:text="SAVE"
         app:layout_constraintTop_toBottomOf="@+id/txtCategory"
-        tools:layout_editor_absoluteX="106dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="106dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,8 +19,8 @@ import home.project.group.financetracker.R;
 
 public class CalendarFragment extends Fragment {
 
-    private CalendarViewModel calendarViewModel;
     RecyclerView recyclerView;
+    private CalendarViewModel calendarViewModel;
     private List<ExpenseTransactionModel> list;
 
     public View onCreateView(@NonNull LayoutInflater inflater,

@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:layout_margin="5sp"
-    android:elevation="2sp"
     android:background="#fff"
-    android:layout_height="wrap_content">
+    android:elevation="2sp"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="10sp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10sp">
 
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/txtExpenseName"
-            android:layout_toLeftOf="@+id/txtAmount"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/txtAmount" />
 
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/txtAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10sp"
             android:text="1234"
             android:textColor="#000"
-            android:textSize="14dp"
-            android:layout_height="wrap_content" />
+            android:textSize="14dp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="10sp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10sp">
 
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/txtCategory"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginHorizontal="10sp">
+        android:weightSum="2">
 
         <Button
+            android:id="@+id/deleteId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/deleteId"
-            android:text="DELETE"
             android:layout_marginEnd="10sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="DELETE" />
     </LinearLayout>
 
 </LinearLayout>

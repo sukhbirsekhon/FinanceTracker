@@ -13,8 +13,6 @@ import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 @Database(entities = {ExpenseTransactionModel.class, RevenueTransactionModel.class}, version = 2)
 public abstract class DatabaseClass extends RoomDatabase {
 
-    public abstract TransactionDao getDao();
-
     private static DatabaseClass instance;
 
     static DatabaseClass getDatabase(final Context context) {
@@ -25,4 +23,6 @@ public abstract class DatabaseClass extends RoomDatabase {
         }
         return instance;
     }
+
+    public abstract TransactionDao getDao();
 }

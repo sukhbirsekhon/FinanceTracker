@@ -53,6 +53,10 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         return list.size();
     }
 
+    public interface DeleteItemClickListener {
+        void onItemDelete(int position, int id);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView expenseName, amount, category;
@@ -65,10 +69,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             category = itemView.findViewById(R.id.txtCategory);
             deleteId = itemView.findViewById(R.id.deleteId);
         }
-    }
-
-    public interface DeleteItemClickListener {
-        void onItemDelete(int position, int id);
     }
 
 }

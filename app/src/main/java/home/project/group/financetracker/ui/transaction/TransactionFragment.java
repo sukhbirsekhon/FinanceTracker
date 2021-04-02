@@ -17,9 +17,9 @@ import home.project.group.financetracker.R;
 
 public class TransactionFragment extends Fragment implements View.OnClickListener {
 
-    private TransactionViewModel transactionViewModel;
     EditText expenseName, amount, category;
     Button save;
+    private TransactionViewModel transactionViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
