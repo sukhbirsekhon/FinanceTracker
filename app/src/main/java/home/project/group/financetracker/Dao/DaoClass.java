@@ -7,12 +7,16 @@ import androidx.room.Query;
 import java.util.List;
 
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
+import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 
 @Dao
 public interface DaoClass {
 
     @Insert
-    void insertAllData(ExpenseTransactionModel model);
+    void insertAllExpenseData(ExpenseTransactionModel model);
+
+    @Insert
+    void insertAllRevenueData(RevenueTransactionModel model);
 
     //Select All Expense Data
     @Query("SELECT * FROM EXPENSE")

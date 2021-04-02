@@ -64,8 +64,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             amount = itemView.findViewById(R.id.txtAmount);
             category = itemView.findViewById(R.id.txtCategory);
             deleteId = itemView.findViewById(R.id.deleteId);
-
-
         }
     }
 

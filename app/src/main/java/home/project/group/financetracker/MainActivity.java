@@ -68,13 +68,12 @@ public class MainActivity extends AppCompatActivity {
         model.setAmount(amount_txt);
         model.setCategory(category_txt);
 
-        DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllData(model);
+        DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllExpenseData(model);
 
         expenseName.setText("");
         amount.setText("");
         category.setText("");
         Toast.makeText(this, "Data successfully saved", Toast.LENGTH_SHORT).show();
-
     }
 
 
