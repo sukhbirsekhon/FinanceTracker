@@ -21,4 +21,12 @@ public interface DaoClass {
     //Select All Revenue Data
     @Query("SELECT * FROM REVENUE")
     List<ExpenseTransactionModel> getAllRevenueData();
+
+    //Delete Expense Data
+    @Query("DELETE FROM EXPENSE WHERE `key`= :id")
+    void deleteExpenseData(int id);
+
+    //Delete Revenue Data
+    @Query("DELETE FROM REVENUE WHERE `key`= :id")
+    void deleteRevenueData(int id);
 }

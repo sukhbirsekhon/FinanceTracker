@@ -4,12 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -20,10 +19,12 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
     Context context;
     List<ExpenseTransactionModel> list;
+    DeleteItemClickListener deleteItemClickListener;
 
-    public ExpenseAdapter(Context context, List<ExpenseTransactionModel> list) {
+    public ExpenseAdapter(Context context, List<ExpenseTransactionModel> list, DeleteItemClickListener deleteItemClickListener) {
         this.context = context;
         this.list = list;
+        this.deleteItemClickListener = deleteItemClickListener;
     }
 
     @NonNull
@@ -33,11 +34,18 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         holder.expenseName.setText(list.get(position).getExpenseName());
         holder.amount.setText(list.get(position).getAmount());
         holder.category.setText(list.get(position).getCategory());
+
+        holder.deleteId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteItemClickListener.onItemDelete(position, list.get(position).getKey());
+            }
+        });
     }
 
     @Override
@@ -48,14 +56,21 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView expenseName, amount, category;
+        Button deleteId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             expenseName = itemView.findViewById(R.id.txtExpenseName);
             amount = itemView.findViewById(R.id.txtAmount);
             category = itemView.findViewById(R.id.txtCategory);
+            deleteId = itemView.findViewById(R.id.deleteId);
+
 
         }
+    }
+
+    public interface DeleteItemClickListener {
+        void onItemDelete(int position, int id);
     }
 
 }

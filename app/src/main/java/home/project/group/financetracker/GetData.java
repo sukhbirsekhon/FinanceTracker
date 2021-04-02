@@ -8,9 +8,14 @@ import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GetData extends AppCompatActivity {
 
     RecyclerView recyclerView;
+
+    private List<ExpenseTransactionModel> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,14 @@ public class GetData extends AppCompatActivity {
     }
 
     private void getData() {
-        recyclerView.setAdapter(new ExpenseAdapter(getApplicationContext(), DatabaseClass.getDatabase(getApplicationContext()).getDao().getAllExpenseData()));
+        list = new ArrayList<>();
+        list = DatabaseClass.getDatabase(getApplicationContext()).getDao().getAllExpenseData();
+        recyclerView.setAdapter(new ExpenseAdapter(getApplicationContext(), list, new ExpenseAdapter.DeleteItemClickListener() {
+            @Override
+            public void onItemDelete(int position, int id) {
+                DatabaseClass.getDatabase(getApplicationContext()).getDao().deleteExpenseData(id);
+                getData();
+            }
+        }));
     }
 }
