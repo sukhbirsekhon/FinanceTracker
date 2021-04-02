@@ -8,8 +8,9 @@ import androidx.room.RoomDatabase;
 
 import home.project.group.financetracker.Dao.DaoClass;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
+import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 
-@Database(entities = {ExpenseTransactionModel.class}, version = 1)
+@Database(entities = {ExpenseTransactionModel.class, RevenueTransactionModel.class}, version = 2)
 public abstract class DatabaseClass extends RoomDatabase {
     public abstract DaoClass getDao();
 
@@ -18,7 +19,7 @@ public abstract class DatabaseClass extends RoomDatabase {
     static DatabaseClass getDatabase(final Context context) {
         if (instance == null) {
             synchronized (DatabaseClass.class) {
-                instance = Room.databaseBuilder(context, DatabaseClass.class, "DATABASE").allowMainThreadQueries().build();
+                instance = Room.databaseBuilder(context, DatabaseClass.class, "DATABASE").fallbackToDestructiveMigration().allowMainThreadQueries().build();
             }
         }
         return instance;

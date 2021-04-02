@@ -22,6 +22,6 @@ public class GetData extends AppCompatActivity {
     }
 
     private void getData() {
-        recyclerView.setAdapter(new ExpenseAdapter(getApplicationContext(), DatabaseClass.getDatabase(getApplicationContext()).getDao().getAllData()));
+        recyclerView.setAdapter(new ExpenseAdapter(getApplicationContext(), DatabaseClass.getDatabase(getApplicationContext()).getDao().getAllExpenseData()));
     }
 }

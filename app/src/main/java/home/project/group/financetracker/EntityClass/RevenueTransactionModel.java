@@ -5,15 +5,15 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "expense")
-public class ExpenseTransactionModel {
+@Entity(tableName = "revenue")
+public class RevenueTransactionModel {
 
     //Primary Key
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int key;
 
-    @ColumnInfo(name = "expenseName")
+    @ColumnInfo(name = "revenueName")
     private String expenseName;
 
     @ColumnInfo(name = "amount")

@@ -14,7 +14,11 @@ public interface DaoClass {
     @Insert
     void insertAllData(ExpenseTransactionModel model);
 
-    //Select All Data
+    //Select All Expense Data
     @Query("SELECT * FROM EXPENSE")
-    List<ExpenseTransactionModel> getAllData();
+    List<ExpenseTransactionModel> getAllExpenseData();
+
+    //Select All Revenue Data
+    @Query("SELECT * FROM REVENUE")
+    List<ExpenseTransactionModel> getAllRevenueData();
 }
