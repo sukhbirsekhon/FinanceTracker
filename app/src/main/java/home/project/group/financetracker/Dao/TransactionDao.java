@@ -33,4 +33,12 @@ public interface TransactionDao {
     //Delete Revenue Data
     @Query("DELETE FROM REVENUE WHERE `key`= :id")
     void deleteRevenueData(int id);
+
+    //Search Expense Data
+    @Query("SELECT * FROM EXPENSE WHERE `expenseName` LIKE :transactionName")
+    List<ExpenseTransactionModel> searchExpenseTransaction(String transactionName);
+
+    //Search Revenue Data
+    @Query("SELECT * FROM REVENUE WHERE `revenueName` LIKE :transactionName")
+    List<ExpenseTransactionModel> searchRevenueTransaction(String transactionName);
 }
