@@ -5,25 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.R;
 
-public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
+public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> implements Filterable {
 
     Context context;
     List<ExpenseTransactionModel> list;
+    List<ExpenseTransactionModel> allData;
     DeleteItemClickListener deleteItemClickListener;
 
     public ExpenseAdapter(Context context, List<ExpenseTransactionModel> list, DeleteItemClickListener deleteItemClickListener) {
         this.context = context;
         this.list = list;
+        allData = new ArrayList<>(list);
         this.deleteItemClickListener = deleteItemClickListener;
     }
 
@@ -52,6 +57,50 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     public int getItemCount() {
         return list.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<ExpenseTransactionModel> filteredList = new ArrayList<>();
+            /**
+             * If user doesn't provide any text then sends back original list with existing data
+             */
+            if (charSequence == null || charSequence.length() == 0) {
+                filteredList.addAll(allData);
+            }
+            /**
+             * If user provides some text then use that text to compare it against transaction name
+             * in the original list
+             */
+            else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (ExpenseTransactionModel item : allData) {
+                    if (item.getExpenseName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            /**
+             * Clear the old list and display filtered list
+             */
+            list.clear();
+            list.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public interface DeleteItemClickListener {
         void onItemDelete(int position, int id);
