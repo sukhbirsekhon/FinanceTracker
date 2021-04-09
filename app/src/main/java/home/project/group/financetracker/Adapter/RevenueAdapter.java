@@ -16,17 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
+import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.R;
 
-public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> implements Filterable {
+public class RevenueAdapter extends RecyclerView.Adapter<RevenueAdapter.ViewHolder> implements Filterable {
 
     Context context;
-    List<ExpenseTransactionModel> list;
-    List<ExpenseTransactionModel> allData;
+    List<RevenueTransactionModel> list;
+    List<RevenueTransactionModel> allData;
     DeleteItemClickListener deleteItemClickListener;
 
-    public ExpenseAdapter(Context context, List<ExpenseTransactionModel> list, DeleteItemClickListener deleteItemClickListener) {
+    public RevenueAdapter(Context context, List<RevenueTransactionModel> list, DeleteItemClickListener deleteItemClickListener) {
         this.context = context;
         this.list = list;
         allData = new ArrayList<>(list);
@@ -42,9 +42,9 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        holder.expenseName.setText(list.get(position).getExpenseName());
+        holder.expenseName.setText(list.get(position).getRevenueName());
         holder.amount.setText("$"+list.get(position).getAmount());
-        holder.amount.setTextColor(Color.RED);
+        holder.amount.setTextColor(Color.GREEN);
         holder.category.setText(list.get(position).getCategory());
 
         holder.deleteId.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +68,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     private Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            List<ExpenseTransactionModel> filteredList = new ArrayList<>();
+            List<RevenueTransactionModel> filteredList = new ArrayList<>();
             /**
              * If user doesn't provide any text then sends back original list with existing data
              */
@@ -82,8 +82,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
-                for (ExpenseTransactionModel item : allData) {
-                    if (item.getExpenseName().toLowerCase().contains(filterPattern)) {
+                for (RevenueTransactionModel item : allData) {
+                    if (item.getRevenueName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }

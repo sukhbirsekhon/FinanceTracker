@@ -24,7 +24,7 @@ public interface TransactionDao {
 
     //Select All Revenue Data
     @Query("SELECT * FROM REVENUE")
-    List<ExpenseTransactionModel> getAllRevenueData();
+    List<RevenueTransactionModel> getAllRevenueData();
 
     //Delete Expense Data
     @Query("DELETE FROM EXPENSE WHERE `key`= :id")
