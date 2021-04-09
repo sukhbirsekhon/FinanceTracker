@@ -6,18 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.Date;
+
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
+import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.R;
 
 public class TransactionFragment extends Fragment implements View.OnClickListener {
 
-    EditText expenseName, amount, category;
+    EditText name, amount, category, date, note;
+    RadioButton radioBtnRevenue, radioBtnExpense;
     Button save;
     private TransactionViewModel transactionViewModel;
 
@@ -27,8 +34,12 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
                 ViewModelProviders.of(this).get(TransactionViewModel.class);
         View root = inflater.inflate(R.layout.fragment_transaction, container, false);
 
-        expenseName = root.findViewById(R.id.txtExpenseName);
+        radioBtnRevenue = (RadioButton) root.findViewById(R.id.radioBtnRevenue);
+        radioBtnExpense = (RadioButton) root.findViewById(R.id.radioBtnExpense);
+        name = root.findViewById(R.id.txtName);
         category = root.findViewById(R.id.txtCategory);
+        date = root.findViewById(R.id.txtCategory);
+        note = root.findViewById(R.id.txtNote);
         amount = root.findViewById(R.id.txtAmount);
         save = (Button) root.findViewById(R.id.btnSave);
 
@@ -42,18 +53,32 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     }
 
     private void saveData() {
-        String expenseName_txt = expenseName.getText().toString().trim();
+        String name_txt = name.getText().toString().trim();
         String amount_txt = amount.getText().toString().trim();
         String category_txt = category.getText().toString().trim();
+        String date_txt = date.getText().toString().trim();
+        String note_txt = note.getText().toString().trim();
 
-        ExpenseTransactionModel model = new ExpenseTransactionModel();
+        if(radioBtnRevenue.isChecked()){
+            RevenueTransactionModel model = new RevenueTransactionModel();
+            model.setRevenueName(name_txt);
+            model.setAmount(amount_txt);
+            model.setCategory(category_txt);
+            model.setDate(date_txt);
+            model.setNote(note_txt);
+            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllRevenueData(model);
+        }
 
-        model.setExpenseName(expenseName_txt);
-        model.setAmount(amount_txt);
-        model.setCategory(category_txt);
+        if(radioBtnExpense.isChecked()){
+            ExpenseTransactionModel model = new ExpenseTransactionModel();
+            model.setExpenseName(name_txt);
+            model.setAmount(amount_txt);
+            model.setCategory(category_txt);
+            model.setDate(date_txt);
+            model.setNote(note_txt);
+            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllExpenseData(model);
+        }
 
-        DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllExpenseData(model);
-
-        Toast.makeText(getActivity(), "Data successfully saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), (radioBtnRevenue.isChecked() ? "Revenue" : "Expense") + " data successfully saved", Toast.LENGTH_SHORT).show();
     }
 }

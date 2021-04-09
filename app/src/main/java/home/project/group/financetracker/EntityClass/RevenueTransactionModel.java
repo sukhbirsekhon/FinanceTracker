@@ -14,7 +14,7 @@ public class RevenueTransactionModel {
     private int key;
 
     @ColumnInfo(name = "revenueName")
-    private String expenseName;
+    private String revenueName;
 
     @ColumnInfo(name = "amount")
     private String amount;
@@ -44,12 +44,12 @@ public class RevenueTransactionModel {
         this.key = key;
     }
 
-    public String getExpenseName() {
-        return expenseName;
+    public String getRevenueName() {
+        return revenueName;
     }
 
-    public void setExpenseName(String expenseName) {
-        this.expenseName = expenseName;
+    public void setRevenueName(String revenueName) {
+        this.revenueName = revenueName;
     }
 
     public String getAmount() {

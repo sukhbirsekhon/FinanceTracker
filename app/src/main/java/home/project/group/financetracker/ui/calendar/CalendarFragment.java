@@ -12,21 +12,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import home.project.group.financetracker.Adapter.ExpenseAdapter;
+import home.project.group.financetracker.Adapter.RevenueAdapter;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
+import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.R;
 
 public class CalendarFragment extends Fragment {
 
     RecyclerView recyclerView;
     private CalendarViewModel calendarViewModel;
-    private List<ExpenseTransactionModel> list;
-    private ExpenseAdapter adapter;
+    private List<ExpenseTransactionModel> expenseList;
+    private List<RevenueTransactionModel> revenueList;
+    private ExpenseAdapter expenseAdapter;
+    private RevenueAdapter revenueAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,15 +50,18 @@ public class CalendarFragment extends Fragment {
      */
     private void getData() {
         /**
-         * Initialize the list and store all expense data from room
+         * Initialize the list and store all expense/revenue data from room
          */
-        list = new ArrayList<>();
-        list = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllExpenseData();
+        expenseList = new ArrayList<>();
+        expenseList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllExpenseData();
+
+        revenueList = new ArrayList<>();
+        revenueList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllRevenueData();
 
         /**
          * Use adapter to fill recycler view with data
          */
-        adapter = new ExpenseAdapter(getActivity().getApplicationContext(), list, new ExpenseAdapter.DeleteItemClickListener() {
+        expenseAdapter = new ExpenseAdapter(getActivity().getApplicationContext(), expenseList, new ExpenseAdapter.DeleteItemClickListener() {
             /**
              * Delete individual card if user click delete button
              * @param position
@@ -65,7 +73,20 @@ public class CalendarFragment extends Fragment {
                 getData();
             }
         });
-        recyclerView.setAdapter(adapter);
+        revenueAdapter = new RevenueAdapter(getActivity().getApplicationContext(), revenueList, new RevenueAdapter.DeleteItemClickListener() {
+            /**
+             * Delete individual card if user click delete button
+             * @param position
+             * @param id
+             */
+            @Override
+            public void onItemDelete(int position, int id) {
+                DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().deleteRevenueData(id);
+                getData();
+            }
+        });
+        ConcatAdapter concatAdapter = new ConcatAdapter(expenseAdapter, revenueAdapter);
+        recyclerView.setAdapter(concatAdapter);
     }
 
     /**
@@ -91,7 +112,7 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                expenseAdapter.getFilter().filter(newText);
                 return false;
             }
         });
