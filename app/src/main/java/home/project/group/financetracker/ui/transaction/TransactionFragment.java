@@ -10,12 +10,8 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatRadioButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.util.Date;
 
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
@@ -38,7 +34,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         radioBtnExpense = (RadioButton) root.findViewById(R.id.radioBtnExpense);
         name = root.findViewById(R.id.txtName);
         category = root.findViewById(R.id.txtCategory);
-        date = root.findViewById(R.id.txtCategory);
+        date = root.findViewById(R.id.txtDate);
         note = root.findViewById(R.id.txtNote);
         amount = root.findViewById(R.id.txtAmount);
         save = (Button) root.findViewById(R.id.btnSave);
@@ -54,7 +50,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
 
     private void saveData() {
         String name_txt = name.getText().toString().trim();
-        String amount_txt = amount.getText().toString().trim();
+        double amount_txt = Double.parseDouble(amount.getText().toString().trim());
         String category_txt = category.getText().toString().trim();
         String date_txt = date.getText().toString().trim();
         String note_txt = note.getText().toString().trim();
