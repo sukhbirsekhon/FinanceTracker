@@ -45,7 +45,7 @@
         android:ems="10"
         android:hint="Category"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/txtDate"
+        app:layout_constraintBottom_toTopOf="@+id/btnDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.211"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,15 +93,15 @@
             android:text="Expense" />
     </RadioGroup>
 
-    <EditText
-        android:id="@+id/txtDate"
+    <Button
+        android:id="@+id/btnDate"
         android:layout_width="340dp"
         android:layout_height="50dp"
         android:layout_marginTop="288dp"
         android:layout_marginEnd="4dp"
+        android:onClick="showDatePickerDialog"
         android:ems="10"
         android:hint="Date"
-        android:inputType="date"
         app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.223"

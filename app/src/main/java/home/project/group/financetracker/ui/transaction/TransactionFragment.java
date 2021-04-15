@@ -10,7 +10,9 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
@@ -19,9 +21,9 @@ import home.project.group.financetracker.R;
 
 public class TransactionFragment extends Fragment implements View.OnClickListener {
 
-    EditText name, amount, category, date, note;
+    EditText name, amount, category, note;
     RadioButton radioBtnRevenue, radioBtnExpense;
-    Button save;
+    Button save, date;
     private TransactionViewModel transactionViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,7 +36,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         radioBtnExpense = (RadioButton) root.findViewById(R.id.radioBtnExpense);
         name = root.findViewById(R.id.txtName);
         category = root.findViewById(R.id.txtCategory);
-        date = root.findViewById(R.id.txtDate);
+        date = root.findViewById(R.id.btnDate);
         note = root.findViewById(R.id.txtNote);
         amount = root.findViewById(R.id.txtAmount);
         save = (Button) root.findViewById(R.id.btnSave);
@@ -49,6 +51,8 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     }
 
     private void saveData() {
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
+        System.out.println("HElloooo, I am in the transaction fragment - "+datePickerFragment.getDate().toString());
         String name_txt = name.getText().toString().trim();
         double amount_txt = Double.parseDouble(amount.getText().toString().trim());
         String category_txt = category.getText().toString().trim();
