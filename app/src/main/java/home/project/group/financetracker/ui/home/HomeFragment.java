@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,21 +20,37 @@ import home.project.group.financetracker.R;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+    private TextView dateTimeDisplay;
+    private Calendar calendar;
+    private SimpleDateFormat dateFormat;
+    private String date;
+    private String today;
+    private int dd, mm, yy;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
+        /* Code for getting today's date*/
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        dateTimeDisplay = root.findViewById(R.id.txt_Today_Date);
+        final Calendar cal = Calendar.getInstance();
+        dd = cal.get(Calendar.DAY_OF_MONTH);
+        mm = cal.get(Calendar.MONTH);
+        dateFormat = new SimpleDateFormat("MMMM" + " dd");
+        /*  If today is April, 21st
+            date = 04/21 */
+        date = dateFormat.format(cal.getTime());
+        /*  date = April 16 */
+        today = "Today is " + date;
+        dateTimeDisplay.setText(today);
+        /*------------------------------*/
+        
+        /* Code for extracting the username and creating a welcome message */
+
+        /* I can't add with a name until we complete the registration UI and development. For now, I just have a message using the design code. - Nick */
+
+        /*------------------------------*/
         return root;
     }
 
