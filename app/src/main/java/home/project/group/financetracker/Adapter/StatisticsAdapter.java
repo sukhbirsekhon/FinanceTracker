@@ -128,16 +128,11 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.Vi
     class ViewHolder extends RecyclerView.ViewHolder {
         PieChart pieChart;
         BarChart barChart;
-        RadioGroup radioGroup;
-        RadioButton radioButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             barChart = itemView.findViewById(R.id.barChart);
             pieChart = itemView.findViewById(R.id.pieChart);
-            radioGroup = itemView.findViewById(R.id.radioGroup);
-            int radioId = radioGroup.getCheckedRadioButtonId();
-            radioButton = itemView.findViewById(radioId);
         }
     }
 
