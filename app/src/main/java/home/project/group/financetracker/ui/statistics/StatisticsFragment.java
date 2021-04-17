@@ -34,7 +34,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
         expenseStatisticsView = root.findViewById(R.id.expenseStatisticsView);
 
-        recyclerView = root.findViewById(R.id.chartsRecyclerview);
+        recyclerView = root.findViewById(R.id.expenseRecyclerview);
 
         getData();
         return root;
