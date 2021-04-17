@@ -12,14 +12,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import home.project.group.financetracker.Adapter.ExpenseStatisticsAdapter;
+import home.project.group.financetracker.Adapter.RevenueStatisticsAdapter;
 import home.project.group.financetracker.R;
 
 public class StatisticsFragment extends Fragment implements View.OnClickListener {
 
-    RecyclerView recyclerView;
-    private ExpenseStatisticsAdapter adapter;
+    RecyclerView expenseRecyclerView, revenueRecyclerView;
+    private ExpenseStatisticsAdapter expenseAdapter;
+    private RevenueStatisticsAdapter revenueAdapter;
     Button expenseViewBtn, revenueViewBtn;
-    LinearLayout expenseStatisticsView;
+    LinearLayout expenseStatisticsView, revenueStatisticsView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -33,26 +35,33 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         revenueViewBtn.setOnClickListener(this);
 
         expenseStatisticsView = root.findViewById(R.id.expenseStatisticsView);
+        revenueStatisticsView = root.findViewById(R.id.revenueStatisticsView);
 
-        recyclerView = root.findViewById(R.id.expenseRecyclerview);
+        expenseRecyclerView = root.findViewById(R.id.expenseRecyclerview);
+        revenueRecyclerView = root.findViewById(R.id.revenueRecyclerview);
 
         getData();
         return root;
     }
 
     private void getData() {
-        adapter = new ExpenseStatisticsAdapter(getActivity().getApplicationContext());
-        recyclerView.setAdapter(adapter);
+        expenseAdapter = new ExpenseStatisticsAdapter(getActivity().getApplicationContext());
+        expenseRecyclerView.setAdapter(expenseAdapter);
+
+        revenueAdapter = new RevenueStatisticsAdapter(getActivity().getApplicationContext());
+        revenueRecyclerView.setAdapter(revenueAdapter);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.expenseViewBtn:
+                revenueStatisticsView.setVisibility(View.GONE);
                 expenseStatisticsView.setVisibility(View.VISIBLE);
                 break;
             case R.id.revenueViewBtn:
                 expenseStatisticsView.setVisibility(View.GONE);
+                revenueStatisticsView.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
