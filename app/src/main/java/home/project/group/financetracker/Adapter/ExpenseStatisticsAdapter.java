@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,11 +26,11 @@ import java.util.List;
 
 import home.project.group.financetracker.R;
 
-public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.ViewHolder> {
+public class ExpenseStatisticsAdapter extends RecyclerView.Adapter<ExpenseStatisticsAdapter.ViewHolder> {
 
     Context context;
 
-    public StatisticsAdapter(Context context) {
+    public ExpenseStatisticsAdapter(Context context) {
         this.context = context;
     }
 
@@ -131,8 +129,8 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            barChart = itemView.findViewById(R.id.barChart);
-            pieChart = itemView.findViewById(R.id.pieChart);
+            barChart = itemView.findViewById(R.id.expenseBarChart);
+            pieChart = itemView.findViewById(R.id.expensePieChart);
         }
     }
 

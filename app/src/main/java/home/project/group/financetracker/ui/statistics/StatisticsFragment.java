@@ -11,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import home.project.group.financetracker.Adapter.StatisticsAdapter;
+import home.project.group.financetracker.Adapter.ExpenseStatisticsAdapter;
 import home.project.group.financetracker.R;
 
 public class StatisticsFragment extends Fragment implements View.OnClickListener {
 
     RecyclerView recyclerView;
-    private StatisticsAdapter adapter;
+    private ExpenseStatisticsAdapter adapter;
     Button expenseViewBtn, revenueViewBtn;
     LinearLayout expenseStatisticsView;
 
@@ -41,7 +41,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     }
 
     private void getData() {
-        adapter = new StatisticsAdapter(getActivity().getApplicationContext());
+        adapter = new ExpenseStatisticsAdapter(getActivity().getApplicationContext());
         recyclerView.setAdapter(adapter);
     }
 
