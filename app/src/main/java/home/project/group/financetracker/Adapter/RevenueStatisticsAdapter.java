@@ -46,10 +46,10 @@ public class RevenueStatisticsAdapter extends RecyclerView.Adapter<RevenueStatis
          * Pie chart
          */
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(18.5f, "Clothing"));
-        entries.add(new PieEntry(26.7f, "Gas"));
-        entries.add(new PieEntry(24.0f, "Sports"));
-        entries.add(new PieEntry(30.8f, "Food"));
+        entries.add(new PieEntry(20f, "Clothing"));
+        entries.add(new PieEntry(30f, "Gas"));
+        entries.add(new PieEntry(40f, "Sports"));
+        entries.add(new PieEntry(10f, "Food"));
 
         PieDataSet set = new PieDataSet(entries, "");
 
@@ -73,13 +73,13 @@ public class RevenueStatisticsAdapter extends RecyclerView.Adapter<RevenueStatis
          * Bar Chart
          */
         List<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0f, 30f));
-        barEntries.add(new BarEntry(1f, 80f));
-        barEntries.add(new BarEntry(2f, 60f));
-        barEntries.add(new BarEntry(3f, 50f));
+        barEntries.add(new BarEntry(0f, 50f));
+        barEntries.add(new BarEntry(1f, 30f));
+        barEntries.add(new BarEntry(2f, 40f));
+        barEntries.add(new BarEntry(3f, 90f));
         // gap of 2f
-        barEntries.add(new BarEntry(5f, 70f));
-        barEntries.add(new BarEntry(6f, 60f));
+        barEntries.add(new BarEntry(5f, 20f));
+        barEntries.add(new BarEntry(6f, 50f));
         BarDataSet barDataSet = new BarDataSet(barEntries, "BarDataSet");
 
         XAxis xAxis = holder.barChart.getXAxis();
