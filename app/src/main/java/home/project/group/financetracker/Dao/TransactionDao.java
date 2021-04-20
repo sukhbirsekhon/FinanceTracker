@@ -6,6 +6,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import home.project.group.financetracker.EntityClass.CategoriesModel;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 
@@ -18,6 +19,9 @@ public interface TransactionDao {
     @Insert
     void insertAllRevenueData(RevenueTransactionModel model);
 
+    @Insert
+    void insertAllCategoriesData(CategoriesModel model);
+
     //Select All Expense Data
     @Query("SELECT * FROM EXPENSE")
     List<ExpenseTransactionModel> getAllExpenseData();
@@ -25,6 +29,18 @@ public interface TransactionDao {
     //Select All Revenue Data
     @Query("SELECT * FROM REVENUE")
     List<RevenueTransactionModel> getAllRevenueData();
+
+    //Select All Categories by Type
+    @Query("SELECT * FROM CATEGORIES WHERE `type` = :type")
+    List<CategoriesModel> getAllTypeCategories(String type);
+
+    //Select All Categories by key (primary key)
+    @Query("SELECT * FROM CATEGORIES WHERE `key` = :key")
+    CategoriesModel getCategoryByKey(int key);
+
+    //Check for duplicate categories
+    @Query("SELECT * FROM CATEGORIES WHERE `name` = :name")
+    CategoriesModel checkForDuplicateCategory(String name);
 
     //Delete Expense Data
     @Query("DELETE FROM EXPENSE WHERE `key`= :id")

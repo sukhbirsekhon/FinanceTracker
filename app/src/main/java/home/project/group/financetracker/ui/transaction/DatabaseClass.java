@@ -7,10 +7,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import home.project.group.financetracker.Dao.TransactionDao;
+import home.project.group.financetracker.EntityClass.CategoriesModel;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 
-@Database(entities = {ExpenseTransactionModel.class, RevenueTransactionModel.class}, version = 3)
+@Database(entities = {ExpenseTransactionModel.class, RevenueTransactionModel.class, CategoriesModel.class}, version = 6)
 public abstract class DatabaseClass extends RoomDatabase {
 
     private static DatabaseClass instance;
