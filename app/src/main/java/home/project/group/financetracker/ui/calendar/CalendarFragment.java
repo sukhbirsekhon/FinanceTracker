@@ -23,11 +23,11 @@ import home.project.group.financetracker.Adapter.RevenueAdapter;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.R;
+import home.project.group.financetracker.Utility.Theme;
 
 public class CalendarFragment extends Fragment {
 
     RecyclerView recyclerView;
-    private CalendarViewModel calendarViewModel;
     private List<ExpenseTransactionModel> expenseList;
     private List<RevenueTransactionModel> revenueList;
     private ExpenseAdapter expenseAdapter;
@@ -35,10 +35,8 @@ public class CalendarFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        calendarViewModel =
-                ViewModelProviders.of(this).get(CalendarViewModel.class);
-        setHasOptionsMenu(true);
-        View root = inflater.inflate(R.layout.fragment_calendar, container, false);
+        Fragment fragment = this;
+        View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_calendar, container, false);
 
         recyclerView = root.findViewById(R.id.recyclerview);
         getData();
