@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <Spinner
         android:id="@+id/txtCategory"
         android:layout_width="340dp"
         android:layout_height="50dp"
@@ -110,6 +110,7 @@
         android:textColorHint="?attr/textColor"
         android:textColor="?attr/textColor"
         android:clickable="true"
+        android:hint="Date"
         app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.223"
