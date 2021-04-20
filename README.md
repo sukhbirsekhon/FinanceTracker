@@ -36,3 +36,13 @@ Finance Tracker app
 		c. Saving goal modifications
 		d. Paycheck day set
 		e. Notifications
+
+	Feature Ideas:
+	Take pictures of the receipt and automatically store the data
+	Receipt storage for tax purposes
+	Recurrence of transaction in transaction page
+	currency converter in settings page
+	Different apps for different services
+	Hey bixbie!
+
+
