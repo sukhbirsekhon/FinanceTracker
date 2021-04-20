@@ -30,6 +30,7 @@ import home.project.group.financetracker.EntityClass.CategoriesModel;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.R;
+import home.project.group.financetracker.Utility.Theme;
 
 public class TransactionFragment extends Fragment implements View.OnClickListener {
 
@@ -39,7 +40,6 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     TextView date;
     RadioButton radioBtnRevenue, radioBtnExpense;
     Button save;
-    private TransactionViewModel transactionViewModel;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private ArrayAdapter<String> dataAdapter;
     private List<String> categories = new ArrayList<>();
@@ -49,9 +49,9 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        transactionViewModel =
-                ViewModelProviders.of(this).get(TransactionViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_transaction, container, false);
+
+        Fragment fragment = this;
+        View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_transaction, container, false);
 
         radioBtnRevenue = (RadioButton) root.findViewById(R.id.radioBtnRevenue);
         radioBtnExpense = (RadioButton) root.findViewById(R.id.radioBtnExpense);

@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,18 +26,18 @@ import java.util.List;
 
 import home.project.group.financetracker.R;
 
-public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.ViewHolder> {
+public class RevenueStatisticsAdapter extends RecyclerView.Adapter<RevenueStatisticsAdapter.ViewHolder> {
 
     Context context;
 
-    public StatisticsAdapter(Context context) {
+    public RevenueStatisticsAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.charts, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.revenue_charts, parent, false));
     }
 
     @Override
@@ -48,10 +46,10 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.Vi
          * Pie chart
          */
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(18.5f, "Clothing"));
-        entries.add(new PieEntry(26.7f, "Gas"));
-        entries.add(new PieEntry(24.0f, "Sports"));
-        entries.add(new PieEntry(30.8f, "Food"));
+        entries.add(new PieEntry(20f, "Clothing"));
+        entries.add(new PieEntry(30f, "Gas"));
+        entries.add(new PieEntry(40f, "Sports"));
+        entries.add(new PieEntry(10f, "Food"));
 
         PieDataSet set = new PieDataSet(entries, "");
 
@@ -63,7 +61,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.Vi
         Description description = new Description();
         description.setEnabled(false);
 
-        CharSequence title = "EXPENSES";
+        CharSequence title = "REVENUES";
 
         holder.pieChart.setData(data);
         holder.pieChart.setDescription(description);
@@ -75,13 +73,13 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.Vi
          * Bar Chart
          */
         List<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0f, 30f));
-        barEntries.add(new BarEntry(1f, 80f));
-        barEntries.add(new BarEntry(2f, 60f));
-        barEntries.add(new BarEntry(3f, 50f));
+        barEntries.add(new BarEntry(0f, 50f));
+        barEntries.add(new BarEntry(1f, 30f));
+        barEntries.add(new BarEntry(2f, 40f));
+        barEntries.add(new BarEntry(3f, 90f));
         // gap of 2f
-        barEntries.add(new BarEntry(5f, 70f));
-        barEntries.add(new BarEntry(6f, 60f));
+        barEntries.add(new BarEntry(5f, 20f));
+        barEntries.add(new BarEntry(6f, 50f));
         BarDataSet barDataSet = new BarDataSet(barEntries, "BarDataSet");
 
         XAxis xAxis = holder.barChart.getXAxis();
@@ -116,7 +114,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.Vi
         holder.barChart.setDrawGridBackground(false);
         holder.barChart.setDoubleTapToZoomEnabled(true);
         holder.barChart.setPinchZoom(true);
-        barDataSet.setColor(Color.parseColor("#B71C1C"));
+        barDataSet.setColor(Color.parseColor("#0fdb42"));
         holder.barChart.invalidate(); // refresh
     }
 
@@ -128,16 +126,11 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.Vi
     class ViewHolder extends RecyclerView.ViewHolder {
         PieChart pieChart;
         BarChart barChart;
-        RadioGroup radioGroup;
-        RadioButton radioButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            barChart = itemView.findViewById(R.id.barChart);
-            pieChart = itemView.findViewById(R.id.pieChart);
-            radioGroup = itemView.findViewById(R.id.radioGroup);
-            int radioId = radioGroup.getCheckedRadioButtonId();
-            radioButton = itemView.findViewById(radioId);
+            barChart = itemView.findViewById(R.id.revenueBarChart);
+            pieChart = itemView.findViewById(R.id.revenuePieChart);
         }
     }
 
