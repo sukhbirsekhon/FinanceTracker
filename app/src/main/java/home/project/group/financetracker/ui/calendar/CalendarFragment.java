@@ -113,6 +113,7 @@ public class CalendarFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 expenseAdapter.getFilter().filter(newText);
+                revenueAdapter.getFilter().filter(newText);
                 return false;
             }
         });

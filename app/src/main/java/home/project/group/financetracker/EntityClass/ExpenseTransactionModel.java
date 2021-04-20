@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import java.sql.Date;
 
 @Entity(tableName = "expense")
 public class ExpenseTransactionModel {
@@ -17,7 +20,7 @@ public class ExpenseTransactionModel {
     private String expenseName;
 
     @ColumnInfo(name = "amount")
-    private String amount;
+    private double amount;
 
     @ColumnInfo(name = "category")
     private String category;
@@ -26,13 +29,14 @@ public class ExpenseTransactionModel {
     private String note;
 
     @ColumnInfo(name = "date")
-    private String date;
+    @TypeConverters({Converters.class})
+    private Date date;
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -52,11 +56,11 @@ public class ExpenseTransactionModel {
         this.expenseName = expenseName;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
