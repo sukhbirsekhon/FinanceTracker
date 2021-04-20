@@ -41,8 +41,7 @@ public class RevenueAdapter extends RecyclerView.Adapter<RevenueAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-
-        holder.expenseName.setText(list.get(position).getRevenueName());
+        holder.revenueName.setText(list.get(position).getRevenueName());
         holder.amount.setText("$"+list.get(position).getAmount());
         holder.amount.setTextColor(Color.GREEN);
         holder.category.setText(list.get(position).getCategory());
@@ -110,12 +109,12 @@ public class RevenueAdapter extends RecyclerView.Adapter<RevenueAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView expenseName, amount, category;
+        TextView revenueName, amount, category;
         Button deleteId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            expenseName = itemView.findViewById(R.id.txtName);
+            revenueName = itemView.findViewById(R.id.txtName);
             amount = itemView.findViewById(R.id.txtAmount);
             category = itemView.findViewById(R.id.txtCategory);
             deleteId = itemView.findViewById(R.id.deleteId);
