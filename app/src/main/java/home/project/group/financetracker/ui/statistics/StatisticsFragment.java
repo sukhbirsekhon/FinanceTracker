@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import home.project.group.financetracker.Adapter.ExpenseStatisticsAdapter;
 import home.project.group.financetracker.Adapter.RevenueStatisticsAdapter;
 import home.project.group.financetracker.R;
+import home.project.group.financetracker.Utility.Theme;
 
 public class StatisticsFragment extends Fragment implements View.OnClickListener {
 
@@ -26,7 +27,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_statistics, container, false);
+        Fragment fragment = this;
+        View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_statistics, container, false);
 
         expenseViewBtn = root.findViewById(R.id.expenseViewBtn);
         revenueViewBtn = root.findViewById(R.id.revenueViewBtn);
