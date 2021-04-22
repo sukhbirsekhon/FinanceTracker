@@ -1,9 +1,12 @@
 package home.project.group.financetracker.ui.transaction;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -39,13 +41,16 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     Date sqlDate;
     TextView date;
     RadioButton radioBtnRevenue, radioBtnExpense;
-    Button save;
+    Button save, addCategory;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private ArrayAdapter<String> dataAdapter;
     private List<String> categories = new ArrayList<>();
+    private List<String> types = new ArrayList<>();
     private final String EXPENSE = "expense";
     private final String REVENUE = "revenue";
     private String category_txt;
+    //By Default, current type is revenue
+    private String currentCategoryType = REVENUE;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         amount = root.findViewById(R.id.txtAmount);
         save = (Button) root.findViewById(R.id.btnSave);
         date = root.findViewById(R.id.txtDate);
+        addCategory = (Button) root.findViewById(R.id.btnAddCategory);
 
         //Dummy data for categories table
         CategoriesModel categoriesModel1 = new CategoriesModel();
@@ -72,16 +78,16 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         CategoriesModel categoriesModel3 = new CategoriesModel();
         categoriesModel3.setName("gas");
         categoriesModel3.setType(EXPENSE);
-        CategoriesModel checkDuplicate1 = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().checkForDuplicateCategory(categoriesModel1.getName().toLowerCase());
-        CategoriesModel checkDuplicate2 = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().checkForDuplicateCategory(categoriesModel2.getName().toLowerCase());
-        CategoriesModel checkDuplicate3 = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().checkForDuplicateCategory(categoriesModel3.getName().toLowerCase());
-        if(checkDuplicate1 == null) {
+        boolean isDuplicate1 = isDuplicateCategory(categoriesModel1);
+        boolean isDuplicate2 = isDuplicateCategory(categoriesModel2);
+        boolean isDuplicate3 = isDuplicateCategory(categoriesModel3);
+        if(!isDuplicate1) {
             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel1);
         }
-        if(checkDuplicate2 == null) {
+        if(!isDuplicate2) {
             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel2);
         }
-        if(checkDuplicate3 == null) {
+        if(!isDuplicate3) {
             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel3);
         }
 
@@ -98,15 +104,15 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         date.setOnClickListener(this);
         radioBtnExpense.setOnClickListener(this);
         radioBtnRevenue.setOnClickListener(this);
-
+        addCategory.setOnClickListener(this);
 
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month + 1;
-                String strDate = month + "-" + day + "-" + year;
-                date.setText(strDate);
-                sqlDate = new Date(year, month, day);
+            month = month + 1;
+            String strDate = month + "-" + day + "-" + year;
+            date.setText(strDate);
+            sqlDate = new Date(year, month, day);
             }
         };
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -119,9 +125,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         return root;
@@ -144,9 +148,44 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.radioBtnExpense:
                 fillAdapter(EXPENSE);
+                currentCategoryType = EXPENSE;
                 break;
             case R.id.radioBtnRevenue:
                 fillAdapter(REVENUE);
+                currentCategoryType = REVENUE;
+                break;
+            case R.id.btnAddCategory:
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Add " + (currentCategoryType == EXPENSE ? "an Expense" : "a Revenue") + " Category");
+                types.add(EXPENSE);
+                types.add(REVENUE);
+                final EditText nameInput = new EditText(this.getContext());
+                nameInput.setInputType(InputType.TYPE_CLASS_TEXT);
+                nameInput.setHint("Name");
+                builder.setView(nameInput);
+
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        CategoriesModel newCategory = new CategoriesModel();
+                        newCategory.setName(nameInput.getText().toString().toLowerCase());
+                        newCategory.setType(currentCategoryType);
+                        boolean duplicate = isDuplicateCategory(newCategory);
+                        if(!duplicate) {
+                            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(newCategory);
+                        }
+                        fillAdapter(currentCategoryType);
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
                 break;
         }
     }
@@ -192,5 +231,13 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         }
 
         Toast.makeText(getActivity(), (radioBtnRevenue.isChecked() ? "Revenue" : "Expense") + " data successfully saved", Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean isDuplicateCategory(CategoriesModel category) {
+        CategoriesModel duplicate = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().checkForDuplicateCategory(category.getName().toLowerCase());
+        if(duplicate == null) {
+            return false;
+        }
+        return true;
     }
 }
