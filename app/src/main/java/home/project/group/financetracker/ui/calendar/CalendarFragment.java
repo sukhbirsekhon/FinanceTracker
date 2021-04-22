@@ -37,6 +37,7 @@ public class CalendarFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         Fragment fragment = this;
         View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_calendar, container, false);
+        setHasOptionsMenu(true);
 
         recyclerView = root.findViewById(R.id.recyclerview);
         getData();
