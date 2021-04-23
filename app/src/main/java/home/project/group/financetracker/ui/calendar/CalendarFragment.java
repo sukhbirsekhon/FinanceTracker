@@ -7,6 +7,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -25,13 +27,15 @@ import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     RecyclerView recyclerView;
     private List<ExpenseTransactionModel> expenseList;
     private List<RevenueTransactionModel> revenueList;
     private ExpenseAdapter expenseAdapter;
     private RevenueAdapter revenueAdapter;
+    Button dailyViewBtn, monthlyViewBtn;
+    LinearLayout dailyView, monthlyView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +43,17 @@ public class CalendarFragment extends Fragment {
         View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_calendar, container, false);
         setHasOptionsMenu(true);
 
-        recyclerView = root.findViewById(R.id.recyclerview);
+        recyclerView = root.findViewById(R.id.dailyRecyclerview);
+
+        dailyViewBtn = root.findViewById(R.id.dailyViewBtn);
+        monthlyViewBtn = root.findViewById(R.id.monthlyViewBtn);
+
+        dailyViewBtn.setOnClickListener(this);
+        monthlyViewBtn.setOnClickListener(this);
+
+        dailyView = root.findViewById(R.id.dailyView);
+        monthlyView = root.findViewById(R.id.monthlyView);
+
         getData();
         return root;
     }
@@ -118,4 +132,21 @@ public class CalendarFragment extends Fragment {
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.dailyViewBtn:
+                monthlyView.setVisibility(View.GONE);
+                dailyView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.monthlyViewBtn:
+                dailyView.setVisibility(View.GONE);
+                monthlyView.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
+        }
+    }
+
 }
