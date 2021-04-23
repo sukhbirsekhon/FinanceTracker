@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import home.project.group.financetracker.Adapter.ExpenseAdapter;
+import home.project.group.financetracker.Adapter.MonthlyAdapter;
 import home.project.group.financetracker.Adapter.RevenueAdapter;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
@@ -29,11 +30,15 @@ import home.project.group.financetracker.Utility.Theme;
 
 public class CalendarFragment extends Fragment implements View.OnClickListener {
 
-    RecyclerView recyclerView;
+    RecyclerView dailyRecyclerView, monthlyRecyclerView;
+
     private List<ExpenseTransactionModel> expenseList;
     private List<RevenueTransactionModel> revenueList;
+
     private ExpenseAdapter expenseAdapter;
     private RevenueAdapter revenueAdapter;
+    private MonthlyAdapter monthlyAdapter;
+
     Button dailyViewBtn, monthlyViewBtn;
     LinearLayout dailyView, monthlyView;
 
@@ -43,7 +48,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_calendar, container, false);
         setHasOptionsMenu(true);
 
-        recyclerView = root.findViewById(R.id.dailyRecyclerview);
+        dailyRecyclerView = root.findViewById(R.id.dailyRecyclerview);
+        monthlyRecyclerView = root.findViewById(R.id.monthlyRecyclerView);
 
         dailyViewBtn = root.findViewById(R.id.dailyViewBtn);
         monthlyViewBtn = root.findViewById(R.id.monthlyViewBtn);
@@ -98,8 +104,12 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                 getData();
             }
         });
+
         ConcatAdapter concatAdapter = new ConcatAdapter(expenseAdapter, revenueAdapter);
-        recyclerView.setAdapter(concatAdapter);
+        dailyRecyclerView.setAdapter(concatAdapter);
+
+        monthlyAdapter = new MonthlyAdapter(getActivity().getApplicationContext());
+        monthlyRecyclerView.setAdapter(monthlyAdapter);
     }
 
     /**
