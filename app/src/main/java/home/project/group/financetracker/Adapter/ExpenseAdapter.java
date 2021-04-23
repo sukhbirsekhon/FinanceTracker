@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
@@ -25,12 +26,15 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     List<ExpenseTransactionModel> list;
     List<ExpenseTransactionModel> allData;
     DeleteItemClickListener deleteItemClickListener;
+    UpdateClickListener btnClickListener;
+    final String EXPENSE = "expense";
 
-    public ExpenseAdapter(Context context, List<ExpenseTransactionModel> list, DeleteItemClickListener deleteItemClickListener) {
+    public ExpenseAdapter(Context context, List<ExpenseTransactionModel> list, DeleteItemClickListener deleteItemClickListener, UpdateClickListener btnClickListener) {
         this.context = context;
         this.list = list;
         allData = new ArrayList<>(list);
         this.deleteItemClickListener = deleteItemClickListener;
+        this.btnClickListener = btnClickListener;
     }
 
     @NonNull
@@ -46,6 +50,20 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         holder.amount.setText("$"+list.get(position).getAmount());
         holder.amount.setTextColor(Color.RED);
         holder.category.setText(list.get(position).getCategory());
+
+        holder.update.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String expenseName = list.get(position).getExpenseName();
+                String amount = String.valueOf(list.get(position).getAmount());
+                String note = list.get(position).getNote();
+                Date dateObject = list.get(position).getDate();
+                String date = dateObject.getMonth() + "-" + dateObject.getDay() + "-" + dateObject.getYear();
+                String category = list.get(position).getCategory();
+                btnClickListener.onBtnClick(EXPENSE, expenseName, amount, note, date, category);
+            }
+        });
 
         holder.deleteId.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,10 +126,14 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         void onItemDelete(int position, int id);
     }
 
+    public interface UpdateClickListener {
+        void onBtnClick(String type, String name, String amount, String note, String date, String category);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView expenseName, amount, category;
-        Button deleteId;
+        Button deleteId, update;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -119,6 +141,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             amount = itemView.findViewById(R.id.txtAmount);
             category = itemView.findViewById(R.id.txtCategory);
             deleteId = itemView.findViewById(R.id.deleteId);
+            update = itemView.findViewById(R.id.btnUpdate);
         }
     }
 

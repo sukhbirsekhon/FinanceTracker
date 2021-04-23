@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calendarUpdateFormLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
+    android:orientation="vertical"
+    tools:context=".ui.calendar.CalendarFragment">
+
+    <EditText
+        android:id="@+id/txtUpdateName"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="148dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:textColorHint="?attr/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtUpdateAmount"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginEnd="4dp"
+        android:ems="10"
+        android:hint="Amount"
+        android:inputType="number|numberDecimal"
+        android:textColorHint="?attr/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/txtUpdateCategory"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="230dp"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="Category"
+        android:inputType="textPersonName"
+        android:textColorHint="?attr/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/txtUpdateDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <RadioGroup
+        android:id="@+id/radioGrpUpdateTransaction"
+        android:layout_width="280dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="27dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtUpdateName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <RadioButton
+            android:id="@+id/radioBtnUpdateRevenue"
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Revenue"
+            android:textColor="?attr/textColor" />
+
+        <RadioButton
+            android:id="@+id/radioBtnUpdateExpense"
+            android:layout_width="152dp"
+            android:layout_height="wrap_content"
+            android:text="Expense"
+            android:textColor="?attr/textColor" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/txtUpdateDate"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="4dp"
+        android:clickable="true"
+        android:hint="Date"
+        android:textColor="?attr/textColor"
+        android:textColorHint="?attr/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtUpdateNote"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="404dp"
+        android:ems="10"
+        android:hint="Note"
+        android:inputType="textPersonName"
+        android:textColorHint="?attr/textColor"
+        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
