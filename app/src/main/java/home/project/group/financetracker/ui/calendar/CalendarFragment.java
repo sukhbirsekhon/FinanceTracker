@@ -51,6 +51,8 @@ public class CalendarFragment extends Fragment {
     private RevenueAdapter revenueAdapter;
     private List<String> categories = new ArrayList<>();
     private ArrayAdapter<String> dataAdapter;
+    final String EXPENSE = "expense";
+    final String REVENUE = "revenue";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -106,8 +108,8 @@ public class CalendarFragment extends Fragment {
             }
         }, new ExpenseAdapter.UpdateClickListener() {
             @Override
-            public void onBtnClick(String type, String name, String amount, String note, String date, String category) {
-                showCategoryUpdateView(type, name, amount, note, date, category);
+            public void onBtnClick(String type, int key, String name, String amount, String note, String date, String category) {
+                categoryUpdateView(type, key, name, amount, note, date, category);
             }
         });
         revenueAdapter = new RevenueAdapter(getActivity().getApplicationContext(), revenueList, new RevenueAdapter.DeleteItemClickListener() {
@@ -124,18 +126,19 @@ public class CalendarFragment extends Fragment {
             }
         }, new RevenueAdapter.UpdateClickListener() {
             @Override
-            public void onBtnClick(String type, String name, String amount, String note, String date, String category) {
-                showCategoryUpdateView(type, name, amount, note, date, category);
+            public void onBtnClick(String type, int key, String name, String amount, String note, String date, String category) {
+                categoryUpdateView(type, key, name, amount, note, date, category);
             }
         });
         ConcatAdapter concatAdapter = new ConcatAdapter(expenseAdapter, revenueAdapter);
         recyclerView.setAdapter(concatAdapter);
     }
 
-    private void showCategoryUpdateView(String type, String name, String amount, String note, String date, String category) {
+    private void categoryUpdateView(String type, int key, String name, String amount, String note, String date, String category) {
+        final int id = key;
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Update a transaction");
-        if(type == "revenue"){
+        if(type == REVENUE){
             radioBtnRevenue.toggle();
         } else {
             radioBtnExpense.toggle();
@@ -157,7 +160,16 @@ public class CalendarFragment extends Fragment {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                String updatedName = txtName.getText().toString().trim();
+                double updatedAmount = Double.parseDouble(txtAmount.getText().toString().trim());
+                String updatedNote = txtNote.getText().toString().trim();
+                if(radioBtnExpense.isChecked()) {
+                    DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().updateExpenseData(id, updatedName, updatedAmount, updatedNote);
+                } else {
+                    DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().updateExpenseData(id, updatedName, updatedAmount, updatedNote);
+                }
+                DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().updateRevenueData(id, updatedName, updatedAmount, updatedNote);
+                getData();
                 dialog.dismiss();
             }
         });

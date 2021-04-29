@@ -54,13 +54,14 @@ public class RevenueAdapter extends RecyclerView.Adapter<RevenueAdapter.ViewHold
 
             @Override
             public void onClick(View view) {
+                int key = list.get(position).getKey();
                 String revenueName = list.get(position).getRevenueName();
                 String amount = String.valueOf(list.get(position).getAmount());
                 String note = list.get(position).getNote();
                 Date dateObject = list.get(position).getDate();
                 String date = dateObject.getMonth() + "-" + dateObject.getDay() + "-" + dateObject.getYear();
                 String category = list.get(position).getCategory();
-                btnClickListener.onBtnClick(REVENUE, revenueName, amount, note, date, category);
+                btnClickListener.onBtnClick(REVENUE, key, revenueName, amount, note, date, category);
             }
         });
 
@@ -126,7 +127,7 @@ public class RevenueAdapter extends RecyclerView.Adapter<RevenueAdapter.ViewHold
     }
 
     public interface UpdateClickListener {
-        void onBtnClick(String type, String name, String amount, String note, String date, String category);
+        void onBtnClick(String type, int key, String name, String amount, String note, String date, String category);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

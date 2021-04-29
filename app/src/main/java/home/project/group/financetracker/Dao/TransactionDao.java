@@ -42,6 +42,14 @@ public interface TransactionDao {
     @Query("SELECT * FROM CATEGORIES WHERE `name` = :name")
     CategoriesModel checkForDuplicateCategory(String name);
 
+    //Update Expense Data
+    @Query("UPDATE EXPENSE SET `expenseName` = :expenseName, `amount` = :amount, `note` = :note WHERE `key` = :key")
+    void updateExpenseData(int key, String expenseName, double amount, String note);
+
+    //Update Revenue Data
+    @Query("UPDATE REVENUE SET `revenueName` = :revenueName, `amount` = :amount, `note` = :note WHERE `key` = :key")
+    void updateRevenueData(int key, String revenueName, double amount, String note);
+
     //Delete Expense Data
     @Query("DELETE FROM EXPENSE WHERE `key`= :id")
     void deleteExpenseData(int id);
