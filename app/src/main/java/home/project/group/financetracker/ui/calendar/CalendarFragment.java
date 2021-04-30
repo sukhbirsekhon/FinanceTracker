@@ -33,6 +33,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     RecyclerView dailyRecyclerView, monthlyRecyclerView;
 
     private List<ExpenseTransactionModel> expenseList;
+    private List<ExpenseTransactionModel> monthlyExpense;
     private List<RevenueTransactionModel> revenueList;
 
     private ExpenseAdapter expenseAdapter;
@@ -77,12 +78,16 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         revenueList = new ArrayList<>();
         revenueList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllRevenueData();
 
+        monthlyExpense = new ArrayList<>();
+        monthlyExpense = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().monthlyExpense();
+
         /**
          * Use adapter to fill recycler view with data
          */
         expenseAdapter = new ExpenseAdapter(getActivity().getApplicationContext(), expenseList, new ExpenseAdapter.DeleteItemClickListener() {
             /**
              * Delete individual card if user click delete button
+             *
              * @param position
              * @param id
              */
@@ -108,7 +113,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         ConcatAdapter concatAdapter = new ConcatAdapter(expenseAdapter, revenueAdapter);
         dailyRecyclerView.setAdapter(concatAdapter);
 
-        monthlyAdapter = new MonthlyAdapter(getActivity().getApplicationContext());
+        monthlyAdapter = new MonthlyAdapter(getActivity().getApplicationContext(), monthlyExpense);
         monthlyRecyclerView.setAdapter(monthlyAdapter);
     }
 

@@ -33,7 +33,8 @@
                 android:id="@+id/txtExpenseTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expenses total" />
+                android:text="Expenses total"
+                android:textColor="#FF0000" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -44,7 +45,8 @@
                 android:id="@+id/txtRevenueTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Revenue total" />
+                android:text="Revenue total"
+                android:textColor="#00FF13" />
 
         </LinearLayout>
 

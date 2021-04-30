@@ -9,14 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
+import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.R;
 
 public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.ViewHolder> {
 
     Context context;
+    List<ExpenseTransactionModel> expenseList;
 
-    public MonthlyAdapter(Context context) {
+    public MonthlyAdapter(Context context, List<ExpenseTransactionModel> expenseList) {
         this.context = context;
+        this.expenseList = expenseList;
     }
 
     @NonNull
@@ -27,15 +32,30 @@ public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.month.setText("April");
-        holder.expenseTotal.setText("$100.10");
-        holder.revenueTotal.setText("$1000");
+        if (expenseList.get(position).getDate().getMonth() == 1 && expenseList.size() != 0 && !expenseList.isEmpty()) {
+            holder.month.setText("Jan");
+            holder.expenseTotal.setText(String.valueOf(expenseList.get(position).getAmount()));
+            holder.revenueTotal.setText("$1000");
+        } else if (expenseList.get(position).getDate().getMonth() == 2 && expenseList.size() != 0 && !expenseList.isEmpty()) {
+            holder.month.setText("Feb");
+            holder.expenseTotal.setText(String.valueOf(expenseList.get(position).getAmount()));
+            holder.revenueTotal.setText("$1000");
+        } else if (expenseList.get(position).getDate().getMonth() == 3 && expenseList.size() != 0 && !expenseList.isEmpty()) {
+            holder.month.setText("Mar");
+            holder.expenseTotal.setText(String.valueOf(expenseList.get(position).getAmount()));
+            holder.revenueTotal.setText("$1000");
+        } else if (expenseList.get(position).getDate().getMonth() == 4 && expenseList.size() != 0 && !expenseList.isEmpty()) {
+            holder.month.setText("Apr");
+            holder.expenseTotal.setText(String.valueOf(expenseList.get(position).getAmount()));
+            holder.revenueTotal.setText("$1000");
+        }
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 20;
+        return expenseList.size();
     }
 
 
