@@ -1,12 +1,9 @@
 package home.project.group.financetracker.Adapter;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,6 +60,7 @@ public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView month, expenseTotal, revenueTotal;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             month = itemView.findViewById(R.id.txtMonth);
