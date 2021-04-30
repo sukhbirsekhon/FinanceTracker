@@ -58,7 +58,11 @@ public interface TransactionDao {
     @Query("SELECT * FROM REVENUE WHERE `revenueName` LIKE :transactionName")
     List<ExpenseTransactionModel> searchRevenueTransaction(String transactionName);
 
-    //Get Monthly data
+    //Get Monthly Expense data
     @Query("SELECT * FROM EXPENSE ORDER BY DATE")
     List<ExpenseTransactionModel> monthlyExpense();
+
+    //Get Monthly Revenue data
+    @Query("SELECT * FROM REVENUE ORDER BY DATE")
+    List<RevenueTransactionModel> monthlyRevenue();
 }

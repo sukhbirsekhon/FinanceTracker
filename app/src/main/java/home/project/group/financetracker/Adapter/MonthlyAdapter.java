@@ -38,59 +38,7 @@ public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.ViewHold
 
         holder.month.setText(Month.of(position + 1).toString());
         holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-        holder.revenueTotal.setText("$0");
-
-
-       /*if (expenseList.get(position).getDate().getMonth() == 1 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Jan");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 2 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Feb");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 3 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Mar");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 4 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Apr");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 5 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("May");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 6 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Jun");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 7 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("July");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 8 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Aug");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 9 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Sep");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 10 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Oct");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 11 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Nov");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        } else if (expenseList.get(position).getDate().getMonth() == 0 && expenseList.size() != 0 && !expenseList.isEmpty()) {
-            holder.month.setText("Dec");
-            holder.expenseTotal.setText(String.valueOf(monthly.get(position).get(0)));
-            holder.revenueTotal.setText("$1000");
-        }*/
-
+        holder.revenueTotal.setText(String.valueOf(monthly.get(position).get(1)));
     }
 
     @Override
