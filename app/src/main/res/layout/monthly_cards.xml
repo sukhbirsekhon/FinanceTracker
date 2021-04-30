@@ -19,10 +19,15 @@
 
             <TextView
                 android:id="@+id/txtMonth"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/txtAmount"
                 android:text="Month" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <Space
                 android:layout_width="wrap_content"
