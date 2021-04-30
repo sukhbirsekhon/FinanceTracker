@@ -197,8 +197,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         addRevenues(nov, monthly);
         addRevenues(dec, monthly);
 
-        System.out.println(monthly);
-
         /**
          * Use adapter to fill recycler view with data
          */
