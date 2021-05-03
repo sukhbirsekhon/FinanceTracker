@@ -12,7 +12,7 @@ import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.EntityClass.TransactionModel;
 
-@Database(entities = {ExpenseTransactionModel.class, RevenueTransactionModel.class, CategoriesModel.class, TransactionModel.class}, version = 7)
+@Database(entities = {ExpenseTransactionModel.class, RevenueTransactionModel.class, CategoriesModel.class, TransactionModel.class}, version = 8)
 public abstract class DatabaseClass extends RoomDatabase {
 
     private static DatabaseClass instance;
