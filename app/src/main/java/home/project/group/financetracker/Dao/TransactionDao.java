@@ -58,6 +58,10 @@ public interface TransactionDao {
     @Query("DELETE FROM REVENUE WHERE `key`= :id")
     void deleteRevenueData(int id);
 
+    //Delete Transaction Data
+    @Query("DELETE FROM TRANSACTIONS WHERE `key`= :id")
+    void deleteTransactionData(int id);
+
     //Search Expense Data
     @Query("SELECT * FROM EXPENSE WHERE `expenseName` LIKE :transactionName")
     List<ExpenseTransactionModel> searchExpenseTransaction(String transactionName);
@@ -66,6 +70,10 @@ public interface TransactionDao {
     @Query("SELECT * FROM REVENUE WHERE `revenueName` LIKE :transactionName")
     List<ExpenseTransactionModel> searchRevenueTransaction(String transactionName);
 
+    //Search Transaction Data
+    @Query("SELECT * FROM TRANSACTIONS WHERE `name` LIKE :transactionName")
+    List<TransactionModel> searchTransaction(String transactionName);
+
     //Get Monthly Expense data
     @Query("SELECT * FROM EXPENSE ORDER BY DATE")
     List<ExpenseTransactionModel> monthlyExpense();
@@ -73,4 +81,8 @@ public interface TransactionDao {
     //Get Monthly Revenue data
     @Query("SELECT * FROM REVENUE ORDER BY DATE")
     List<RevenueTransactionModel> monthlyRevenue();
+
+    //Get Monthly Transaction data
+    @Query("SELECT * FROM TRANSACTIONS ORDER BY DATE")
+    List<TransactionModel> monthlyTransaction();
 }
