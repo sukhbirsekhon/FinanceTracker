@@ -9,6 +9,7 @@ import java.util.List;
 import home.project.group.financetracker.EntityClass.CategoriesModel;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
+import home.project.group.financetracker.EntityClass.TransactionModel;
 
 @Dao
 public interface TransactionDao {
@@ -20,6 +21,9 @@ public interface TransactionDao {
     void insertAllRevenueData(RevenueTransactionModel model);
 
     @Insert
+    void insertAllTransactionData(TransactionModel model);
+
+    @Insert
     void insertAllCategoriesData(CategoriesModel model);
 
     //Select All Expense Data
@@ -29,6 +33,10 @@ public interface TransactionDao {
     //Select All Revenue Data
     @Query("SELECT * FROM REVENUE")
     List<RevenueTransactionModel> getAllRevenueData();
+
+    //Select Transaction Data
+    @Query("SELECT * FROM TRANSACTIONS")
+    List<TransactionModel> getAllTransactionData();
 
     //Select All Categories by Type
     @Query("SELECT * FROM CATEGORIES WHERE `type` = :type")
