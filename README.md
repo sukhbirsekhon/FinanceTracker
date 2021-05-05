@@ -27,7 +27,10 @@ Finance Tracker app
 		a. Can even look 
 		b. Drop down: For the 
 		
-
+		Proposed Ideas:
+			1. Make a filter that shows a list of the different views (day, week, month, etc)
+			2. Make the tabs in calendar similar to the setting app on the iPhone (sort of a list view)
+		
 	5) Settings: 
 		a. Profile
 			i. Name
