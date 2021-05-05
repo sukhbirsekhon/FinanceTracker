@@ -42,9 +42,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        holder.expenseName.setText(list.get(position).getName());
+        holder.name.setText(list.get(position).getName());
         holder.amount.setText("$" + list.get(position).getAmount());
-        holder.amount.setTextColor(Color.RED);
+        if (list.get(position).getType().equals("R")) {
+            holder.amount.setTextColor(Color.GREEN);
+        } else if (list.get(position).getType().equals("E")) {
+            holder.amount.setTextColor(Color.RED);
+        } else {
+            holder.amount.setTextColor(Color.BLACK);
+        }
+
         holder.category.setText(list.get(position).getCategory());
 
         holder.deleteId.setOnClickListener(new View.OnClickListener() {
@@ -110,12 +117,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView expenseName, amount, category;
+        TextView name, amount, category;
         Button deleteId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            expenseName = itemView.findViewById(R.id.txtName);
+            name = itemView.findViewById(R.id.txtName);
             amount = itemView.findViewById(R.id.txtAmount);
             category = itemView.findViewById(R.id.txtCategory);
             deleteId = itemView.findViewById(R.id.deleteId);
