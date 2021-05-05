@@ -31,6 +31,7 @@ import java.util.List;
 import home.project.group.financetracker.EntityClass.CategoriesModel;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
+import home.project.group.financetracker.EntityClass.TransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
 
@@ -210,24 +211,26 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         double amount_txt = Double.parseDouble(amount.getText().toString().trim());
         String note_txt = note.getText().toString().trim();
 
-        if(radioBtnRevenue.isChecked()){
-            RevenueTransactionModel model = new RevenueTransactionModel();
-            model.setRevenueName(name_txt);
+        if(radioBtnRevenue.isChecked()) {
+            TransactionModel model = new TransactionModel();
+            model.setName(name_txt);
             model.setAmount(amount_txt);
             model.setCategory(category_txt);
             model.setDate(sqlDate);
             model.setNote(note_txt);
-            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllRevenueData(model);
+            model.setType("R");
+            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllTransactionData(model);
         }
 
-        if(radioBtnExpense.isChecked()){
-            ExpenseTransactionModel model = new ExpenseTransactionModel();
-            model.setExpenseName(name_txt);
+        if(radioBtnExpense.isChecked()) {
+            TransactionModel model = new TransactionModel();
+            model.setName(name_txt);
             model.setAmount(amount_txt);
             model.setCategory(category_txt);
             model.setDate(sqlDate);
             model.setNote(note_txt);
-            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllExpenseData(model);
+            model.setType("E");
+            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllTransactionData(model);
         }
 
         Toast.makeText(getActivity(), (radioBtnRevenue.isChecked() ? "Revenue" : "Expense") + " data successfully saved", Toast.LENGTH_SHORT).show();

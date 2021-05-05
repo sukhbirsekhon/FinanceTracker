@@ -22,8 +22,10 @@ import java.util.List;
 import home.project.group.financetracker.Adapter.ExpenseAdapter;
 import home.project.group.financetracker.Adapter.MonthlyAdapter;
 import home.project.group.financetracker.Adapter.RevenueAdapter;
+import home.project.group.financetracker.Adapter.TransactionAdapter;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
+import home.project.group.financetracker.EntityClass.TransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
 
@@ -35,6 +37,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     private List<ExpenseTransactionModel> monthlyExpense;
     private List<RevenueTransactionModel> revenueList;
     private List<RevenueTransactionModel> monthlyRevenue;
+
+    private List<TransactionModel> transactionList;
+    private List<TransactionModel> monthlyTransaction;
 
     private List<Double> jan;
     private List<Double> feb;
@@ -54,6 +59,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     private ExpenseAdapter expenseAdapter;
     private RevenueAdapter revenueAdapter;
     private MonthlyAdapter monthlyAdapter;
+
+    private TransactionAdapter transactionAdapter;
 
     Button dailyViewBtn, monthlyViewBtn;
     LinearLayout dailyView, monthlyView;
@@ -93,11 +100,17 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         revenueList = new ArrayList<>();
         revenueList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllRevenueData();
 
+        transactionList = new ArrayList<>();
+        transactionList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllTransactionData();
+
         monthlyExpense = new ArrayList<>();
         monthlyExpense = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().monthlyExpense();
 
         monthlyRevenue = new ArrayList<>();
         monthlyRevenue = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().monthlyRevenue();
+
+        monthlyTransaction = new ArrayList<>();
+        monthlyTransaction = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().monthlyTransaction();
 
         jan = new ArrayList<>();
         feb = new ArrayList<>();
@@ -114,31 +127,31 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
         monthly = new ArrayList<>();
 
-        for (int i = 0; i < monthlyExpense.size(); i++) {
-            if (monthlyExpense.get(i).getDate().getMonth() == 1) {
-                addMonthlyExpenses(monthlyExpense, jan, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 2) {
-                addMonthlyExpenses(monthlyExpense, feb, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 3) {
-                addMonthlyExpenses(monthlyExpense, mar, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 4) {
-                addMonthlyExpenses(monthlyExpense, apr, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 5) {
-                addMonthlyExpenses(monthlyExpense, may, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 6) {
-                addMonthlyExpenses(monthlyExpense, jun, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 7) {
-                addMonthlyExpenses(monthlyExpense, jul, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 8) {
-                addMonthlyExpenses(monthlyExpense, aug, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 9) {
-                addMonthlyExpenses(monthlyExpense, sep, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 10) {
-                addMonthlyExpenses(monthlyExpense, oct, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 11) {
-                addMonthlyExpenses(monthlyExpense, nov, i);
-            } else if (monthlyExpense.get(i).getDate().getMonth() == 0) {
-                addMonthlyExpenses(monthlyExpense, dec, i);
+        for (int i = 0; i < monthlyTransaction.size(); i++) {
+            if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 1) {
+                jan.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 2) {
+                feb.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 3) {
+                mar.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 4) {
+                apr.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 5) {
+                may.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 6) {
+                jun.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 7) {
+                jul.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 8) {
+                aug.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 9) {
+                sep.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 10) {
+                oct.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 11) {
+                nov.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("E") && monthlyTransaction.get(i).getDate().getMonth() == 0) {
+                dec.add(monthlyTransaction.get(i).getAmount());
             }
         }
 
@@ -155,31 +168,31 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         addExpenses(nov, monthly);
         addExpenses(dec, monthly);
 
-        for (int i = 0; i < monthlyRevenue.size(); i++) {
-            if (monthlyRevenue.get(i).getDate().getMonth() == 1) {
-                addMonthlyRevenues(monthlyRevenue, jan, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 2) {
-                addMonthlyRevenues(monthlyRevenue, feb, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 3) {
-                addMonthlyRevenues(monthlyRevenue, mar, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 4) {
-                addMonthlyRevenues(monthlyRevenue, apr, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 5) {
-                addMonthlyRevenues(monthlyRevenue, may, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 6) {
-                addMonthlyRevenues(monthlyRevenue, jun, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 7) {
-                addMonthlyRevenues(monthlyRevenue, jul, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 8) {
-                addMonthlyRevenues(monthlyRevenue, aug, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 9) {
-                addMonthlyRevenues(monthlyRevenue, sep, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 10) {
-                addMonthlyRevenues(monthlyRevenue, oct, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 11) {
-                addMonthlyRevenues(monthlyRevenue, nov, i);
-            } else if (monthlyRevenue.get(i).getDate().getMonth() == 0) {
-                addMonthlyRevenues(monthlyRevenue, dec, i);
+        for (int i = 0; i < monthlyTransaction.size(); i++) {
+            if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 1) {
+                jan.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 2) {
+                feb.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 3) {
+                mar.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 4) {
+                apr.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 5) {
+                may.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 6) {
+                jun.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 7) {
+                jul.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 8) {
+                aug.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 9) {
+                sep.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 10) {
+                oct.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 11) {
+                nov.add(monthlyTransaction.get(i).getAmount());
+            } else if (monthlyTransaction.get(i).getType().equals("R") && monthlyTransaction.get(i).getDate().getMonth() == 0) {
+                dec.add(monthlyTransaction.get(i).getAmount());
             }
         }
 
@@ -195,6 +208,11 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         addRevenues(oct, monthly);
         addRevenues(nov, monthly);
         addRevenues(dec, monthly);
+
+        for (int i = 0; i < monthly.size(); i++) {
+            System.out.println("R: ");
+            System.out.print(monthly.get(i).toString());
+        }
 
         /**
          * Use adapter to fill recycler view with data
@@ -225,33 +243,25 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        transactionAdapter = new TransactionAdapter(getActivity().getApplicationContext(), transactionList, new TransactionAdapter.DeleteItemClickListener() {
+            /**
+             * Delete individual card if user click delete button
+             *
+             * @param position
+             * @param id
+             */
+            @Override
+            public void onItemDelete(int position, int id) {
+                DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().deleteTransactionData(id);
+                getData();
+            }
+        });
+
         ConcatAdapter concatAdapter = new ConcatAdapter(expenseAdapter, revenueAdapter);
-        dailyRecyclerView.setAdapter(concatAdapter);
+        dailyRecyclerView.setAdapter(transactionAdapter);
 
         monthlyAdapter = new MonthlyAdapter(getActivity().getApplicationContext(), monthlyExpense, monthly);
         monthlyRecyclerView.setAdapter(monthlyAdapter);
-    }
-
-    /**
-     * Add month's expenses to appropriate month arraylist
-     *
-     * @param monthlyExpense
-     * @param monthName
-     * @param i
-     */
-    private void addMonthlyExpenses(List<ExpenseTransactionModel> monthlyExpense, List<Double> monthName, int i) {
-        monthName.add(monthlyExpense.get(i).getAmount());
-    }
-
-    /**
-     * Add month's revenue to appropriate month arraylist
-     *
-     * @param monthlyRevenue
-     * @param monthName
-     * @param i
-     */
-    private void addMonthlyRevenues(List<RevenueTransactionModel> monthlyRevenue, List<Double> monthName, int i) {
-        monthName.add(monthlyRevenue.get(i).getAmount());
     }
 
     /**
@@ -312,8 +322,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                expenseAdapter.getFilter().filter(newText);
-                revenueAdapter.getFilter().filter(newText);
+                transactionAdapter.getFilter().filter(newText);
                 return false;
             }
         });

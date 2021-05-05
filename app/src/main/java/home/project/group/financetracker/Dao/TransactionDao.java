@@ -9,6 +9,7 @@ import java.util.List;
 import home.project.group.financetracker.EntityClass.CategoriesModel;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
+import home.project.group.financetracker.EntityClass.TransactionModel;
 
 @Dao
 public interface TransactionDao {
@@ -20,6 +21,9 @@ public interface TransactionDao {
     void insertAllRevenueData(RevenueTransactionModel model);
 
     @Insert
+    void insertAllTransactionData(TransactionModel model);
+
+    @Insert
     void insertAllCategoriesData(CategoriesModel model);
 
     //Select All Expense Data
@@ -29,6 +33,10 @@ public interface TransactionDao {
     //Select All Revenue Data
     @Query("SELECT * FROM REVENUE")
     List<RevenueTransactionModel> getAllRevenueData();
+
+    //Select Transaction Data
+    @Query("SELECT * FROM TRANSACTIONS")
+    List<TransactionModel> getAllTransactionData();
 
     //Select All Categories by Type
     @Query("SELECT * FROM CATEGORIES WHERE `type` = :type")
@@ -50,6 +58,10 @@ public interface TransactionDao {
     @Query("DELETE FROM REVENUE WHERE `key`= :id")
     void deleteRevenueData(int id);
 
+    //Delete Transaction Data
+    @Query("DELETE FROM TRANSACTIONS WHERE `key`= :id")
+    void deleteTransactionData(int id);
+
     //Search Expense Data
     @Query("SELECT * FROM EXPENSE WHERE `expenseName` LIKE :transactionName")
     List<ExpenseTransactionModel> searchExpenseTransaction(String transactionName);
@@ -58,6 +70,10 @@ public interface TransactionDao {
     @Query("SELECT * FROM REVENUE WHERE `revenueName` LIKE :transactionName")
     List<ExpenseTransactionModel> searchRevenueTransaction(String transactionName);
 
+    //Search Transaction Data
+    @Query("SELECT * FROM TRANSACTIONS WHERE `name` LIKE :transactionName")
+    List<TransactionModel> searchTransaction(String transactionName);
+
     //Get Monthly Expense data
     @Query("SELECT * FROM EXPENSE ORDER BY DATE")
     List<ExpenseTransactionModel> monthlyExpense();
@@ -65,4 +81,8 @@ public interface TransactionDao {
     //Get Monthly Revenue data
     @Query("SELECT * FROM REVENUE ORDER BY DATE")
     List<RevenueTransactionModel> monthlyRevenue();
+
+    //Get Monthly Transaction data
+    @Query("SELECT * FROM TRANSACTIONS ORDER BY DATE")
+    List<TransactionModel> monthlyTransaction();
 }
