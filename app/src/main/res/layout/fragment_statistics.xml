@@ -50,10 +50,10 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="57dp">
 
-            <com.github.mikephil.charting.charts.BarChart
+          <!--  <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/expenseBarChart"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp" />-->
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/expensePieChart"

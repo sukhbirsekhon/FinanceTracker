@@ -23,18 +23,27 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import home.project.group.financetracker.EntityClass.TransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
+import home.project.group.financetracker.ui.statistics.DatabaseClass;
 
 public class StatisticsFragment extends Fragment implements View.OnClickListener {
 
     Button expenseViewBtn, revenueViewBtn;
     LinearLayout expenseStatisticsView, revenueStatisticsView;
+
     PieChart expensePieChart, revenuePieChart;
     BarChart expenseBarChart, revenueBarChart;
+
+    List<TransactionModel> transactionList;
+    List<String> expenseCategories;
+    List<Double> expenseAmount;
+    List<String> uniqueExpenseCategoriesList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +60,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         expenseStatisticsView = root.findViewById(R.id.expenseStatisticsView);
         revenueStatisticsView = root.findViewById(R.id.revenueStatisticsView);
 
-        expenseBarChart = root.findViewById(R.id.expenseBarChart);
+//        expenseBarChart = root.findViewById(R.id.expenseBarChart);
         expensePieChart = root.findViewById(R.id.expensePieChart);
 
         revenueBarChart = root.findViewById(R.id.revenueBarChart);
@@ -71,12 +80,36 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         /**
          * Pie chart
          */
+        transactionList = new ArrayList<>();
+        transactionList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllTransactionData();
+
+        expenseCategories = new ArrayList<>();
+        expenseAmount = new ArrayList<>();
+
+        for (int i = 0; i < transactionList.size(); i++) {
+            if (transactionList.get(i).getType().equals("E")) {
+                expenseCategories.add(transactionList.get(i).getCategory());
+                expenseAmount.add(transactionList.get(i).getAmount());
+            }
+        }
+
+        double totalExpense = 0;
+        for (int i = 0; i < expenseAmount.size(); i++) {
+            totalExpense += expenseAmount.get(i);
+        }
+
+        uniqueExpenseCategoriesList = removeDuplicates(expenseCategories);
 
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(18.5f, "Clothing"));
+        for (int i = 0; i < uniqueExpenseCategoriesList.size(); i++) {
+            entries.add(new PieEntry((float) round(((expenseAmount.get(i) / totalExpense) * 100), 1), uniqueExpenseCategoriesList.get(i)));
+            System.out.println(uniqueExpenseCategoriesList.get(i));
+            System.out.println((float) round(((expenseAmount.get(i) / totalExpense) * 100), 1));
+        }
+        /*entries.add(new PieEntry(18.5f, "Clothing"));
         entries.add(new PieEntry(26.7f, "Gas"));
         entries.add(new PieEntry(24.0f, "Sports"));
-        entries.add(new PieEntry(30.8f, "Food"));
+        entries.add(new PieEntry(30.8f, "Food"));*/
 
         PieDataSet set = new PieDataSet(entries, "");
 
@@ -191,4 +224,36 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 break;
         }
     }
+
+    /**
+     * Round decimals to specific nth place
+     *
+     * @param value     84.124
+     * @param precision 1
+     * @return 84.1
+     */
+    private static double round(double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
+
+    public static <T> List<T> removeDuplicates(List<T> list) {
+        // Create a new ArrayList
+        List<T> newList = new ArrayList<T>();
+
+        // Traverse through the first list
+        for (T element : list) {
+
+            // If this element is not present in newList
+            // then add it
+            if (!newList.contains(element)) {
+
+                newList.add(element);
+            }
+        }
+
+        // return the new list
+        return newList;
+    }
+
 }
