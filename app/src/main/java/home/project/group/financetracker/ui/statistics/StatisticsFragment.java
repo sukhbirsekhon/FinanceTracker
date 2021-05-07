@@ -23,14 +23,12 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import home.project.group.financetracker.EntityClass.TransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
-import home.project.group.financetracker.ui.statistics.DatabaseClass;
 
 public class StatisticsFragment extends Fragment implements View.OnClickListener {
 
@@ -41,9 +39,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     BarChart expenseBarChart, revenueBarChart;
 
     List<TransactionModel> transactionList;
-    List<String> expenseCategories;
     List<Double> expenseAmount;
-    List<String> uniqueExpenseCategoriesList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -81,35 +77,36 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
          * Pie chart
          */
         transactionList = new ArrayList<>();
-        transactionList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllTransactionData();
+        transactionList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getGroupedCategories();
 
-        expenseCategories = new ArrayList<>();
         expenseAmount = new ArrayList<>();
 
+        /**
+         * Store all expenses in another arraylist
+         */
         for (int i = 0; i < transactionList.size(); i++) {
             if (transactionList.get(i).getType().equals("E")) {
-                expenseCategories.add(transactionList.get(i).getCategory());
                 expenseAmount.add(transactionList.get(i).getAmount());
             }
         }
 
+        /**
+         * Get Total expense amount by adding all expenses from all categories
+         */
         double totalExpense = 0;
         for (int i = 0; i < expenseAmount.size(); i++) {
             totalExpense += expenseAmount.get(i);
         }
 
-        uniqueExpenseCategoriesList = removeDuplicates(expenseCategories);
-
+        /**
+         * Create pie chart entries by find a percentage of each expense and giving a
+         * label of unique categories
+         */
         List<PieEntry> entries = new ArrayList<>();
-        for (int i = 0; i < uniqueExpenseCategoriesList.size(); i++) {
-            entries.add(new PieEntry((float) round(((expenseAmount.get(i) / totalExpense) * 100), 1), uniqueExpenseCategoriesList.get(i)));
-            System.out.println(uniqueExpenseCategoriesList.get(i));
-            System.out.println((float) round(((expenseAmount.get(i) / totalExpense) * 100), 1));
+        for (int i = 0; i < transactionList.size(); i++) {
+            entries.add(new PieEntry((float) round(((transactionList.get(i).getAmount() / totalExpense) * 100), 1),
+                    transactionList.get(i).getCategory().substring(0, 1).toUpperCase() + transactionList.get(i).getCategory().substring(1)));
         }
-        /*entries.add(new PieEntry(18.5f, "Clothing"));
-        entries.add(new PieEntry(26.7f, "Gas"));
-        entries.add(new PieEntry(24.0f, "Sports"));
-        entries.add(new PieEntry(30.8f, "Food"));*/
 
         PieDataSet set = new PieDataSet(entries, "");
 
@@ -128,8 +125,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         expensePieChart.setCenterText(title);
         expensePieChart.notifyDataSetChanged();
         expensePieChart.invalidate(); // refresh
-
-
     }
 
     private void revenueCharts() {
@@ -236,24 +231,4 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;
     }
-
-    public static <T> List<T> removeDuplicates(List<T> list) {
-        // Create a new ArrayList
-        List<T> newList = new ArrayList<T>();
-
-        // Traverse through the first list
-        for (T element : list) {
-
-            // If this element is not present in newList
-            // then add it
-            if (!newList.contains(element)) {
-
-                newList.add(element);
-            }
-        }
-
-        // return the new list
-        return newList;
-    }
-
 }

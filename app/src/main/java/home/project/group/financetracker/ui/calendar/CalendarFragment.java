@@ -1,6 +1,7 @@
 package home.project.group.financetracker.ui.calendar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -189,8 +190,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         addRevenues(dec, monthly);
 
         for (int i = 0; i < monthly.size(); i++) {
-            System.out.println("R: ");
-            System.out.print(monthly.get(i).toString());
+            Log.d("Expense/Revenue", monthly.get(i).toString());
         }
 
         transactionAdapter = new TransactionAdapter(getActivity().getApplicationContext(), transactionList, new TransactionAdapter.DeleteItemClickListener() {

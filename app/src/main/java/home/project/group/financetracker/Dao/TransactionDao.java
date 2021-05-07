@@ -85,4 +85,8 @@ public interface TransactionDao {
     //Get Monthly Transaction data
     @Query("SELECT * FROM TRANSACTIONS ORDER BY DATE")
     List<TransactionModel> monthlyTransaction();
+
+    //Get unique categories and added amount
+    @Query("SELECT `key`, name, type, SUM(amount) as amount, category, note, date FROM TRANSACTIONS GROUP BY category")
+    List<TransactionModel> getGroupedCategories();
 }
