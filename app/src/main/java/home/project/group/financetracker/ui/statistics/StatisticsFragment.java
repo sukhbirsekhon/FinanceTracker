@@ -71,6 +71,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         /**
          * Pie chart
          */
+
         List<PieEntry> entries = new ArrayList<>();
         entries.add(new PieEntry(18.5f, "Clothing"));
         entries.add(new PieEntry(26.7f, "Gas"));
@@ -95,53 +96,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         expensePieChart.notifyDataSetChanged();
         expensePieChart.invalidate(); // refresh
 
-        /**
-         * Bar Chart
-         */
-        List<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0f, 30f));
-        barEntries.add(new BarEntry(1f, 80f));
-        barEntries.add(new BarEntry(2f, 60f));
-        barEntries.add(new BarEntry(3f, 50f));
-        // gap of 2f
-        barEntries.add(new BarEntry(5f, 70f));
-        barEntries.add(new BarEntry(6f, 60f));
-        BarDataSet barDataSet = new BarDataSet(barEntries, "BarDataSet");
 
-        XAxis xAxis = expenseBarChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.BLACK);
-        xAxis.setTextSize(8f);
-        xAxis.setDrawAxisLine(false);
-        xAxis.setDrawGridLines(false);
-        xAxis.setLabelRotationAngle(-45);
-
-        YAxis right = expenseBarChart.getAxisRight();
-        right.setDrawLabels(false); // no axis labels
-        right.setDrawAxisLine(false); // no axis line
-        right.setDrawGridLines(false); // no grid lines
-        right.setDrawZeroLine(true);
-
-        YAxis left = expenseBarChart.getAxisLeft();
-        left.setDrawLabels(false); // no axis labels
-        left.setDrawAxisLine(false); // no axis line
-        left.setDrawGridLines(false); // no grid lines
-        left.setDrawZeroLine(true);
-
-        BarData barData = new BarData(barDataSet);
-        barData.setBarWidth(0.9f); // set custom bar width
-        expenseBarChart.setData(barData);
-        expenseBarChart.setFitBars(true); // make the x-axis fit exactly all bars
-        expenseBarChart.setDrawGridBackground(false);
-        expenseBarChart.setDescription(description);
-        expenseBarChart.animateXY(2000, 2000);
-        expenseBarChart.setScaleEnabled(true);
-        expenseBarChart.setDrawValueAboveBar(true);
-        expenseBarChart.setDrawGridBackground(false);
-        expenseBarChart.setDoubleTapToZoomEnabled(true);
-        expenseBarChart.setPinchZoom(true);
-        barDataSet.setColor(Color.parseColor("#B71C1C"));
-        expenseBarChart.invalidate(); // refresh
     }
 
     private void revenueCharts() {

@@ -22,12 +22,10 @@ import static android.view.View.GONE;
 public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.ViewHolder> {
 
     Context context;
-    List<ExpenseTransactionModel> expenseList;
     List<List<Double>> monthly;
 
-    public MonthlyAdapter(Context context, List<ExpenseTransactionModel> expenseList, List<List<Double>> monthly) {
+    public MonthlyAdapter(Context context, List<List<Double>> monthly) {
         this.context = context;
-        this.expenseList = expenseList;
         this.monthly = monthly;
     }
 

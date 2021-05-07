@@ -13,15 +13,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import home.project.group.financetracker.Adapter.ExpenseAdapter;
 import home.project.group.financetracker.Adapter.MonthlyAdapter;
-import home.project.group.financetracker.Adapter.RevenueAdapter;
 import home.project.group.financetracker.Adapter.TransactionAdapter;
 import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
@@ -32,11 +29,6 @@ import home.project.group.financetracker.Utility.Theme;
 public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     RecyclerView dailyRecyclerView, monthlyRecyclerView;
-
-    private List<ExpenseTransactionModel> expenseList;
-    private List<ExpenseTransactionModel> monthlyExpense;
-    private List<RevenueTransactionModel> revenueList;
-    private List<RevenueTransactionModel> monthlyRevenue;
 
     private List<TransactionModel> transactionList;
     private List<TransactionModel> monthlyTransaction;
@@ -56,8 +48,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     private List<List<Double>> monthly;
 
-    private ExpenseAdapter expenseAdapter;
-    private RevenueAdapter revenueAdapter;
     private MonthlyAdapter monthlyAdapter;
 
     private TransactionAdapter transactionAdapter;
@@ -94,20 +84,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         /**
          * Initialize the list and store all expense/revenue data from room
          */
-        expenseList = new ArrayList<>();
-        expenseList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllExpenseData();
-
-        revenueList = new ArrayList<>();
-        revenueList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllRevenueData();
 
         transactionList = new ArrayList<>();
         transactionList = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllTransactionData();
-
-        monthlyExpense = new ArrayList<>();
-        monthlyExpense = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().monthlyExpense();
-
-        monthlyRevenue = new ArrayList<>();
-        monthlyRevenue = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().monthlyRevenue();
 
         monthlyTransaction = new ArrayList<>();
         monthlyTransaction = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().monthlyTransaction();
@@ -214,35 +193,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             System.out.print(monthly.get(i).toString());
         }
 
-        /**
-         * Use adapter to fill recycler view with data
-         */
-        expenseAdapter = new ExpenseAdapter(getActivity().getApplicationContext(), expenseList, new ExpenseAdapter.DeleteItemClickListener() {
-            /**
-             * Delete individual card if user click delete button
-             *
-             * @param position
-             * @param id
-             */
-            @Override
-            public void onItemDelete(int position, int id) {
-                DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().deleteExpenseData(id);
-                getData();
-            }
-        });
-        revenueAdapter = new RevenueAdapter(getActivity().getApplicationContext(), revenueList, new RevenueAdapter.DeleteItemClickListener() {
-            /**
-             * Delete individual card if user click delete button
-             * @param position
-             * @param id
-             */
-            @Override
-            public void onItemDelete(int position, int id) {
-                DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().deleteRevenueData(id);
-                getData();
-            }
-        });
-
         transactionAdapter = new TransactionAdapter(getActivity().getApplicationContext(), transactionList, new TransactionAdapter.DeleteItemClickListener() {
             /**
              * Delete individual card if user click delete button
@@ -257,10 +207,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        ConcatAdapter concatAdapter = new ConcatAdapter(expenseAdapter, revenueAdapter);
         dailyRecyclerView.setAdapter(transactionAdapter);
 
-        monthlyAdapter = new MonthlyAdapter(getActivity().getApplicationContext(), monthlyExpense, monthly);
+        monthlyAdapter = new MonthlyAdapter(getActivity().getApplicationContext(), monthly);
         monthlyRecyclerView.setAdapter(monthlyAdapter);
     }
 
