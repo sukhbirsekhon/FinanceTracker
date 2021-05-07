@@ -1,4 +1,4 @@
-package home.project.group.financetracker.ui.transaction;
+package home.project.group.financetracker.ui.statistics;
 
 import android.content.Context;
 

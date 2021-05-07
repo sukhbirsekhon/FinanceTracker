@@ -9,20 +9,27 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import home.project.group.financetracker.Adapter.ExpenseStatisticsAdapter;
-import home.project.group.financetracker.Adapter.RevenueStatisticsAdapter;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+
+import java.util.List;
+
+import home.project.group.financetracker.EntityClass.TransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
 
 public class StatisticsFragment extends Fragment implements View.OnClickListener {
 
-    RecyclerView expenseRecyclerView, revenueRecyclerView;
-    private ExpenseStatisticsAdapter expenseAdapter;
-    private RevenueStatisticsAdapter revenueAdapter;
     Button expenseViewBtn, revenueViewBtn;
     LinearLayout expenseStatisticsView, revenueStatisticsView;
+
+    PieChart expensePieChart, revenuePieChart;
+    BarChart revenueBarChart;
+
+    List<TransactionModel> transactionList;
+    List<Double> expenseAmount;
+    List<Double> revenueAmount;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,19 +46,19 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         expenseStatisticsView = root.findViewById(R.id.expenseStatisticsView);
         revenueStatisticsView = root.findViewById(R.id.revenueStatisticsView);
 
-        expenseRecyclerView = root.findViewById(R.id.expenseRecyclerview);
-        revenueRecyclerView = root.findViewById(R.id.revenueRecyclerview);
+        expensePieChart = root.findViewById(R.id.expensePieChart);
+
+        revenueBarChart = root.findViewById(R.id.revenueBarChart);
+        revenuePieChart = root.findViewById(R.id.revenuePieChart);
 
         getData();
         return root;
     }
 
     private void getData() {
-        expenseAdapter = new ExpenseStatisticsAdapter(getActivity().getApplicationContext());
-        expenseRecyclerView.setAdapter(expenseAdapter);
-
-        revenueAdapter = new RevenueStatisticsAdapter(getActivity().getApplicationContext());
-        revenueRecyclerView.setAdapter(revenueAdapter);
+        ExpenseCharts.expenseCategoryPieChart(transactionList, expenseAmount, expensePieChart, getActivity());
+        RevenueCharts.revenueCategoryPieChart(transactionList, revenueAmount, revenuePieChart, getActivity());
+        RevenueCharts.revenueBarChart(revenueBarChart);
     }
 
     @Override
@@ -69,4 +76,5 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 break;
         }
     }
+
 }

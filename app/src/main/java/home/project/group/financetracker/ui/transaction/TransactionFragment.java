@@ -29,8 +29,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import home.project.group.financetracker.EntityClass.CategoriesModel;
-import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
-import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.EntityClass.TransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
@@ -82,13 +80,13 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         boolean isDuplicate1 = isDuplicateCategory(categoriesModel1);
         boolean isDuplicate2 = isDuplicateCategory(categoriesModel2);
         boolean isDuplicate3 = isDuplicateCategory(categoriesModel3);
-        if(!isDuplicate1) {
+        if (!isDuplicate1) {
             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel1);
         }
-        if(!isDuplicate2) {
+        if (!isDuplicate2) {
             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel2);
         }
-        if(!isDuplicate3) {
+        if (!isDuplicate3) {
             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel3);
         }
 
@@ -110,10 +108,10 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-            month = month + 1;
-            String strDate = month + "-" + day + "-" + year;
-            date.setText(strDate);
-            sqlDate = new Date(year, month, day);
+                month = month + 1;
+                String strDate = month + "-" + day + "-" + year;
+                date.setText(strDate);
+                sqlDate = new Date(year, month, day);
             }
         };
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -126,7 +124,8 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         return root;
@@ -134,7 +133,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.btnSave:
                 saveData();
                 break;
@@ -173,7 +172,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
                         newCategory.setName(nameInput.getText().toString().toLowerCase());
                         newCategory.setType(currentCategoryType);
                         boolean duplicate = isDuplicateCategory(newCategory);
-                        if(!duplicate) {
+                        if (!duplicate) {
                             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(newCategory);
                         }
                         fillAdapter(currentCategoryType);
@@ -194,11 +193,11 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     private void fillAdapter(String type) {
         List<CategoriesModel> typeCategories = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllTypeCategories(type);
         categories = new ArrayList<>();
-        for(CategoriesModel typeCategory : typeCategories) {
+        for (CategoriesModel typeCategory : typeCategories) {
             categories.add(typeCategory.getName());
         }
         dataAdapter.clear();
-        if (categories != null){
+        if (categories != null) {
             for (String object : categories) {
                 dataAdapter.insert(object, dataAdapter.getCount());
             }
@@ -211,7 +210,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         double amount_txt = Double.parseDouble(amount.getText().toString().trim());
         String note_txt = note.getText().toString().trim();
 
-        if(radioBtnRevenue.isChecked()) {
+        if (radioBtnRevenue.isChecked()) {
             TransactionModel model = new TransactionModel();
             model.setName(name_txt);
             model.setAmount(amount_txt);
@@ -222,7 +221,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllTransactionData(model);
         }
 
-        if(radioBtnExpense.isChecked()) {
+        if (radioBtnExpense.isChecked()) {
             TransactionModel model = new TransactionModel();
             model.setName(name_txt);
             model.setAmount(amount_txt);
@@ -238,7 +237,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
 
     public boolean isDuplicateCategory(CategoriesModel category) {
         CategoriesModel duplicate = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().checkForDuplicateCategory(category.getName().toLowerCase());
-        if(duplicate == null) {
+        if (duplicate == null) {
             return false;
         }
         return true;

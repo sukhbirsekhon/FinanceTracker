@@ -10,11 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.Month;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
 import home.project.group.financetracker.R;
 
 import static android.view.View.GONE;
@@ -22,12 +19,10 @@ import static android.view.View.GONE;
 public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.ViewHolder> {
 
     Context context;
-    List<ExpenseTransactionModel> expenseList;
     List<List<Double>> monthly;
 
-    public MonthlyAdapter(Context context, List<ExpenseTransactionModel> expenseList, List<List<Double>> monthly) {
+    public MonthlyAdapter(Context context, List<List<Double>> monthly) {
         this.context = context;
-        this.expenseList = expenseList;
         this.monthly = monthly;
     }
 
