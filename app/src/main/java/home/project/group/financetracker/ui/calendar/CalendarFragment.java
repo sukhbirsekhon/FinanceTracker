@@ -9,12 +9,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -35,7 +37,7 @@ import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     EditText txtName, txtAmount, txtNote;
     ConstraintLayout updateFormLayout;
@@ -51,6 +53,7 @@ public class CalendarFragment extends Fragment {
     private RevenueAdapter revenueAdapter;
     private List<String> categories = new ArrayList<>();
     private ArrayAdapter<String> dataAdapter;
+    private String category_txt;
     final String EXPENSE = "expense";
     final String REVENUE = "revenue";
 
@@ -71,12 +74,50 @@ public class CalendarFragment extends Fragment {
         txtDate = updateForm.findViewById(R.id.txtUpdateDate);
         recyclerView = root.findViewById(R.id.recyclerview);
 
-        dataAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories);
+        dataAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories) {
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        };
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(dataAdapter);
 
+        radioBtnExpense.setOnClickListener(this);
+        radioBtnRevenue.setOnClickListener(this);
+
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object item = dataAdapter.getItem(position);
+                if (item != null) {
+                    System.out.println("Spinner Category category_txt "+item.toString());
+                    category_txt = item.toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
         getData();
         return root;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.radioBtnUpdateExpense:
+                fillCategoryAdapter(EXPENSE);
+                break;
+            case R.id.radioBtnUpdateRevenue:
+                fillCategoryAdapter(REVENUE);
+                break;
+        }
     }
 
     /**
@@ -109,7 +150,7 @@ public class CalendarFragment extends Fragment {
         }, new ExpenseAdapter.UpdateClickListener() {
             @Override
             public void onBtnClick(String type, int key, String name, String amount, String note, String date, String category) {
-                categoryUpdateView(type, key, name, amount, note, date, category);
+                cardUpdateView(type, key, name, amount, note, date, category);
             }
         });
         revenueAdapter = new RevenueAdapter(getActivity().getApplicationContext(), revenueList, new RevenueAdapter.DeleteItemClickListener() {
@@ -127,15 +168,16 @@ public class CalendarFragment extends Fragment {
         }, new RevenueAdapter.UpdateClickListener() {
             @Override
             public void onBtnClick(String type, int key, String name, String amount, String note, String date, String category) {
-                categoryUpdateView(type, key, name, amount, note, date, category);
+                cardUpdateView(type, key, name, amount, note, date, category);
             }
         });
         ConcatAdapter concatAdapter = new ConcatAdapter(expenseAdapter, revenueAdapter);
         recyclerView.setAdapter(concatAdapter);
     }
 
-    private void categoryUpdateView(String type, int key, String name, String amount, String note, String date, String category) {
+    private void cardUpdateView(String type, int key, String name, String amount, String note, String date, final String category) {
         final int id = key;
+        final String previousType = type;
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Update a transaction");
         if(type == REVENUE){
@@ -148,6 +190,7 @@ public class CalendarFragment extends Fragment {
         txtNote.setText(note);
         txtDate.setText(date);
         fillCategoryAdapter(type);
+        System.out.println("CATEGORY -- "+category+" POSITION -- "+dataAdapter.getPosition(category));
         spinnerCategory.setSelection(dataAdapter.getPosition(category));
         if(updateFormLayout.getParent() != null) {
             ((ViewGroup)updateFormLayout.getParent()).removeView(updateFormLayout);
@@ -164,11 +207,38 @@ public class CalendarFragment extends Fragment {
                 double updatedAmount = Double.parseDouble(txtAmount.getText().toString().trim());
                 String updatedNote = txtNote.getText().toString().trim();
                 if(radioBtnExpense.isChecked()) {
-                    DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().updateExpenseData(id, updatedName, updatedAmount, updatedNote);
-                } else {
-                    DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().updateExpenseData(id, updatedName, updatedAmount, updatedNote);
+                    if(previousType == REVENUE) {
+                        ExpenseTransactionModel model = new ExpenseTransactionModel();
+                        model.setExpenseName(updatedName);
+                        model.setAmount(updatedAmount);
+                        model.setNote(updatedNote);
+                        model.setCategory(category_txt);
+                        model.setDate(new Date(2021, 10, 25));
+                        DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().deleteRevenueData(id);
+                        DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllExpenseData(model);
+                        Toast.makeText(getActivity(), "Successfully converted to Expesne data", Toast.LENGTH_SHORT).show();
+                    } else {
+                        DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().updateExpenseData(id, updatedName, updatedAmount, category_txt, updatedNote);
+                        Toast.makeText(getActivity(), "Successfully updated the Expesne data", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().updateRevenueData(id, updatedName, updatedAmount, updatedNote);
+
+                if(radioBtnRevenue.isChecked()) {
+                    if(previousType == EXPENSE) {
+                        RevenueTransactionModel model = new RevenueTransactionModel();
+                        model.setRevenueName(updatedName);
+                        model.setAmount(updatedAmount);
+                        model.setNote(updatedNote);
+                        model.setCategory(category_txt);
+                        model.setDate(new Date(2021, 10, 25));
+                        DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().deleteExpenseData(id);
+                        DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllRevenueData(model);
+                        Toast.makeText(getActivity(), "Successfully converted to Revenue data", Toast.LENGTH_SHORT).show();
+                    } else {
+                        DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().updateRevenueData(id, updatedName, updatedAmount, category_txt, updatedNote);
+                        Toast.makeText(getActivity(), "Successfully updated the Revenue data", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 getData();
                 dialog.dismiss();
             }
@@ -184,14 +254,14 @@ public class CalendarFragment extends Fragment {
     }
 
     private void fillCategoryAdapter(String type) {
-        List<CategoriesModel> typeCategories = new ArrayList<>();
-        typeCategories = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllTypeCategories(type);
+        List<CategoriesModel> typeCategories = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getAllTypeCategories(type);
         categories = new ArrayList<>();
         for(CategoriesModel typeCategory : typeCategories) {
             categories.add(typeCategory.getName());
         }
         dataAdapter.clear();
         if (categories != null){
+            dataAdapter.insert("Select a Category...", 0);
             for (String object : categories) {
                 dataAdapter.insert(object, dataAdapter.getCount());
             }

@@ -128,8 +128,6 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
             public void onNothingSelected(AdapterView<?> parent) { }
         });
 
-        fillAdapter(currentCategoryType);
-
         return root;
     }
 
