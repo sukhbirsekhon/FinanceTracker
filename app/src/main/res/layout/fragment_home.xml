@@ -15,7 +15,7 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="57dp"
-        android:visibility="gone">
+        >
 
         <TextView
             android:id="@+id/txt_Welcome_Message"
@@ -65,6 +65,8 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="57dp"
+        android:padding="10dp"
+        android:visibility="gone"
         >
 
 
@@ -115,6 +117,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
+            android:id="@+id/spinnerAndButton"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:paddingLeft="1dp"
@@ -122,11 +125,9 @@
 
             <Spinner
                 android:id="@+id/txtCategory"
-                android:layout_width="340dp"
+                android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
                 android:layout_marginTop="1dp"
-                android:layout_marginEnd="82dp"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
                 android:hint="Category"
@@ -140,9 +141,9 @@
 
             <Button
                 android:id="@+id/btnAddCategory"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="350dp"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="320dp"
                 android:layout_marginTop="1dp"
                 android:layout_marginBottom="4dp"
                 android:text="+"
@@ -208,7 +209,7 @@
 
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnSaveHomePage"
             android:layout_width="120dp"
             android:layout_height="58dp"
             android:layout_marginStart="130dp"

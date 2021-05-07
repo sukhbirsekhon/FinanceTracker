@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,7 +37,7 @@ import home.project.group.financetracker.ui.transaction.TransactionFragment;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-
+    Button btnSaveHomePage;
     Button addIcon;
     private TextView dateTimeDisplay;
     private Calendar calendar;
@@ -43,6 +45,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String date;
     private String today;
     private int dd, mm, yy;
+    LinearLayout homePageView, popUpTransactionView;
+    RelativeLayout spinnerAndButton;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,6 +56,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_home, container, false);
 
         addIcon = (Button) root.findViewById(R.id.btn_add_icon);
+
+        btnSaveHomePage = (Button) root.findViewById(R.id.btnSaveHomePage);
         dateTimeDisplay = root.findViewById(R.id.txt_Today_Date);
         final Calendar cal = Calendar.getInstance();
         dd = cal.get(Calendar.DAY_OF_MONTH);
@@ -71,9 +77,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         /*------------------------------*/
 
-
+        homePageView = root.findViewById(R.id.homePageView);
+        popUpTransactionView = root.findViewById(R.id.popUpTransactionView);
         addIcon.setOnClickListener(this);
-
+        btnSaveHomePage.setOnClickListener(this);
 
         return root;
     }
@@ -83,13 +90,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_add_icon:
-
-
-                super.onResume();
-
-                 break;
-
-             default:
+                homePageView.setVisibility(View.GONE);
+                popUpTransactionView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.btnSaveHomePage:
+                homePageView.setVisibility(View.VISIBLE);
+                popUpTransactionView.setVisibility(View.GONE);
+                break;
+            default:
                 break;
         }
     }
