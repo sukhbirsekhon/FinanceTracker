@@ -8,11 +8,9 @@ import androidx.room.RoomDatabase;
 
 import home.project.group.financetracker.Dao.TransactionDao;
 import home.project.group.financetracker.EntityClass.CategoriesModel;
-import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
-import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.EntityClass.TransactionModel;
 
-@Database(entities = {ExpenseTransactionModel.class, RevenueTransactionModel.class, CategoriesModel.class, TransactionModel.class}, version = 8)
+@Database(entities = {CategoriesModel.class, TransactionModel.class}, version = 9)
 public abstract class DatabaseClass extends RoomDatabase {
 
     private static DatabaseClass instance;

@@ -34,7 +34,7 @@ public class ExpenseCharts {
          * Store all expenses in another arraylist
          */
         for (int i = 0; i < transactionList.size(); i++) {
-            if (transactionList.get(i).getType().equals("E")) {
+            if (transactionList.get(i).getType().equals("expense")) {
                 expenseAmount.add(transactionList.get(i).getAmount());
             }
         }

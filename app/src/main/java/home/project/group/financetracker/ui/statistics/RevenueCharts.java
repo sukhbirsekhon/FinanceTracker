@@ -42,7 +42,7 @@ public class RevenueCharts {
          * Store all revenue in another arraylist
          */
         for (int i = 0; i < transactionList.size(); i++) {
-            if (transactionList.get(i).getType().equals("R")) {
+            if (transactionList.get(i).getType().equals("revenue")) {
                 revenueAmount.add(transactionList.get(i).getAmount());
             }
         }

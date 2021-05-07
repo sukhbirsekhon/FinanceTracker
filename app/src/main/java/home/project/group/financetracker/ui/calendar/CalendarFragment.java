@@ -21,8 +21,6 @@ import java.util.List;
 
 import home.project.group.financetracker.Adapter.MonthlyAdapter;
 import home.project.group.financetracker.Adapter.TransactionAdapter;
-import home.project.group.financetracker.EntityClass.ExpenseTransactionModel;
-import home.project.group.financetracker.EntityClass.RevenueTransactionModel;
 import home.project.group.financetracker.EntityClass.TransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
