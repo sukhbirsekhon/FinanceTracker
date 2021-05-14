@@ -42,7 +42,7 @@ public class RevenueCharts {
          * Store all revenue in another arraylist
          */
         for (int i = 0; i < transactionList.size(); i++) {
-            if (transactionList.get(i).getType().equals("revenue")) {
+            if (transactionList.get(i).getType().equals("R")) {
                 revenueAmount.add(transactionList.get(i).getAmount());
             }
         }
@@ -54,6 +54,8 @@ public class RevenueCharts {
         for (int i = 0; i < revenueAmount.size(); i++) {
             totalRevenue += revenueAmount.get(i);
         }
+        System.out.println(totalRevenue);
+
 
         /**
          * Create pie chart entries by find a percentage of each revenue and giving a
@@ -61,8 +63,12 @@ public class RevenueCharts {
          */
         List<PieEntry> entries = new ArrayList<>();
         for (int i = 0; i < transactionList.size(); i++) {
-            entries.add(new PieEntry((float) RoundNumbers.round(((transactionList.get(i).getAmount() / totalRevenue) * 100), 1),
-                    transactionList.get(i).getCategory().substring(0, 1).toUpperCase() + transactionList.get(i).getCategory().substring(1)));
+            if (transactionList.get(i).getType().equals("R")) {
+                entries.add(new PieEntry((float) RoundNumbers.round(((transactionList.get(i).getAmount() / totalRevenue) * 100), 1),
+                        transactionList.get(i).getCategory().substring(0, 1).toUpperCase() + transactionList.get(i).getCategory().substring(1)));
+                System.out.println((float) RoundNumbers.round(((transactionList.get(i).getAmount() / totalRevenue) * 100), 1));
+                System.out.println(transactionList.get(i).getCategory().substring(0, 1).toUpperCase() + transactionList.get(i).getCategory().substring(1));
+            }
         }
 
         PieDataSet set = new PieDataSet(entries, "");
