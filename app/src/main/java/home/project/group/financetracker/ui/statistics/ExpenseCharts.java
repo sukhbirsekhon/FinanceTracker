@@ -34,7 +34,7 @@ public class ExpenseCharts {
          * Store all expenses in another arraylist
          */
         for (int i = 0; i < transactionList.size(); i++) {
-            if (transactionList.get(i).getType().equals("expense")) {
+            if (transactionList.get(i).getType().equals("E")) {
                 expenseAmount.add(transactionList.get(i).getAmount());
             }
         }
@@ -53,8 +53,10 @@ public class ExpenseCharts {
          */
         List<PieEntry> entries = new ArrayList<>();
         for (int i = 0; i < transactionList.size(); i++) {
-            entries.add(new PieEntry((float) RoundNumbers.round(((transactionList.get(i).getAmount() / totalExpense) * 100), 1),
-                    transactionList.get(i).getCategory().substring(0, 1).toUpperCase() + transactionList.get(i).getCategory().substring(1)));
+            if (transactionList.get(i).getType().equals("E")) {
+                entries.add(new PieEntry((float) RoundNumbers.round(((transactionList.get(i).getAmount() / totalExpense) * 100), 1),
+                        transactionList.get(i).getCategory().substring(0, 1).toUpperCase() + transactionList.get(i).getCategory().substring(1)));
+            }
         }
 
         PieDataSet set = new PieDataSet(entries, "");
