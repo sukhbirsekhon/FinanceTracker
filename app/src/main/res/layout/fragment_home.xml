@@ -29,4 +29,47 @@
         android:textColor="?attr/textColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+        android:id="@+id/textView"
+        android:layout_width="342dp"
+        android:layout_height="85dp"
+        android:fontFamily="@font/aclonica"
+        android:text="Live Free"
+        android:textColor="#E91E63"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024" />
+
+        <TextView
+        android:id="@+id/txt_Welcome_Message"
+        android:layout_width="283dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="136dp"
+        android:text="Welcome Back!"
+        android:textColor="?attr/textColor"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+       android:id="@+id/txt_Today_Date"
+       android:layout_width="311dp"
+       android:layout_height="64dp"
+       android:layout_marginStart="48dp"
+       android:layout_marginTop="548dp"
+       android:text="Date message"
+       android:textColor="?attr/textColor"
+       android:textSize="40sp"
+       android:textStyle="bold"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+       
 </androidx.constraintlayout.widget.ConstraintLayout>
