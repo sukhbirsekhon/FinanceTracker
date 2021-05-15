@@ -4,7 +4,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="backgroundColor">#ffffff</item>
+        <item name="backgroundColor">#F8F8F8</item>
         <item name="textColor">#000000</item>
     </style>
 

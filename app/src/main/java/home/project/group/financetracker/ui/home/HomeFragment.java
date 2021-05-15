@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
             date = 04/21 */
         date = dateFormat.format(cal.getTime());
         /*  date = April 16 */
-        today = "Today is " + date;
+        today = "It is " + date + " & time to save!";
         dateTimeDisplay.setText(today);
         /*------------------------------*/
 
