@@ -102,18 +102,3 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 }
-
-
-
-  /*
-
-          View myView = view.findViewById(R.id.navigation_transaction);
-                myView.performClick();
-
-   /*   MenuItem menuItem = (MenuItem) view.findViewById(R.id.navigation_transaction);
-                menuItem.setActionView(R.id.navigation_transaction);
-
-    MenuItem actionRestart = (MenuItem) view.findViewById(R.id.navigation_transaction);
-                actionRestart.getActionView();*/
-
-
