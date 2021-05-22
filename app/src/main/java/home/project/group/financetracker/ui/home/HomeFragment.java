@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String today;
     private int dd, mm, yy;
     LinearLayout homePageView, popUpTransactionView;
-    TextView top5TransTextView;
+  
     private List<TransactionModel> top5Transactions;
 
 
@@ -41,16 +41,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = this;
         View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_home, container, false);
 
-        top5TransTextView = root.findViewById(R.id.top5transTextView);
 
         top5Transactions = new ArrayList<>();
         top5Transactions = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getTop5Transactions();
 
-        top5TransTextView.setText("");
-        /*Inserting the first 5 Names into the ArrayList*/
-        for (int i = 0; i < top5Transactions.size(); i++) {
-            top5TransTextView.append(top5Transactions.get(i).getName());
-        }
+       
 
 
         addIcon = (Button) root.findViewById(R.id.btn_add_icon);
