@@ -41,19 +41,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-                android:id="@+id/btn_add_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="255dp"
-
-                android:layout_marginEnd="68dp"
-                android:layout_marginBottom="162dp"
-                android:background="@drawable/ic_round_button"
-                android:text="+"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/btn_add_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="305dp"
+            android:layout_marginTop="405dp"
+            android:layout_marginEnd="68dp"
+            android:layout_marginBottom="162dp"
+            android:background="@drawable/ic_round_button"
+            android:text="+"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </LinearLayout>
