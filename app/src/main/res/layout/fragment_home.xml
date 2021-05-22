@@ -40,12 +40,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+        <Button
                 android:id="@+id/btn_add_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="255dp"
-                android:layout_marginTop="321dp"
+
                 android:layout_marginEnd="68dp"
                 android:layout_marginBottom="162dp"
                 android:background="@drawable/ic_round_button"
@@ -54,6 +54,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
     </LinearLayout>
 

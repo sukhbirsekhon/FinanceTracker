@@ -49,4 +49,8 @@ public interface TransactionDao {
     //Check for duplicate categories
     @Query("SELECT * FROM CATEGORIES WHERE `name` = :name")
     CategoriesModel checkForDuplicateCategory(String name);
+
+    //Getting the top 5 most recent transactions - For display on the home page, with most recent on top.
+    @Query("SELECT * FROM TRANSACTIONS LIMIT 5")
+    List<TransactionModel> getTop5Transactions();
 }
