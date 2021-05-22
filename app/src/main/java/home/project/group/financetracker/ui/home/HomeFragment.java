@@ -1,52 +1,38 @@
 package home.project.group.financetracker.ui.home;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.TrafficStats;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-import home.project.group.financetracker.EntityClass.CategoriesModel;
+import home.project.group.financetracker.EntityClass.TransactionModel;
 import home.project.group.financetracker.R;
 import home.project.group.financetracker.Utility.Theme;
-import home.project.group.financetracker.ui.transaction.DatabaseClass;
-import home.project.group.financetracker.ui.transaction.TransactionFragment;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     Button btnSaveHomePage;
     Button addIcon;
     private TextView dateTimeDisplay;
-    private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String date;
     private String today;
     private int dd, mm, yy;
     LinearLayout homePageView, popUpTransactionView;
-    RelativeLayout spinnerAndButton;
+    TextView top5TransTextView;
+    private List<TransactionModel> top5Transactions;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,6 +40,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         Fragment fragment = this;
         View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_home, container, false);
+
+        top5TransTextView = root.findViewById(R.id.top5transTextView);
+
+        top5Transactions = new ArrayList<>();
+        top5Transactions = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getTop5Transactions();
+
+        top5TransTextView.setText("");
+        /*Inserting the first 5 Names into the ArrayList*/
+        for (int i = 0; i < top5Transactions.size(); i++) {
+            top5TransTextView.append(top5Transactions.get(i).getName());
+        }
+
 
         addIcon = (Button) root.findViewById(R.id.btn_add_icon);
 
@@ -69,6 +67,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         /*  date = April 16 */
         today = "Today is " + date;
         dateTimeDisplay.setText(today);
+
+
         /*------------------------------*/
 
         /* Code for extracting the username and creating a welcome message */
@@ -81,6 +81,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         popUpTransactionView = root.findViewById(R.id.popUpTransactionView);
         addIcon.setOnClickListener(this);
         btnSaveHomePage.setOnClickListener(this);
+
 
         return root;
     }
