@@ -1,5 +1,6 @@
 package home.project.group.financetracker.ui.home;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String date;
     private String today;
     private int dd, mm, yy;
-    LinearLayout homePageView, popUpTransactionView;
+    private TextView firstElement;
+    LinearLayout homePageView, popUpTransactionView, linearLayout;
   
     private List<TransactionModel> top5Transactions;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,12 +42,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Fragment fragment = this;
         View root = Theme.themeDecider(inflater, fragment).inflate(R.layout.fragment_home, container, false);
 
-
         top5Transactions = new ArrayList<>();
         top5Transactions = DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().getTop5Transactions();
-
-       
-
 
         addIcon = (Button) root.findViewById(R.id.btn_add_icon);
 
@@ -77,6 +74,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         addIcon.setOnClickListener(this);
         btnSaveHomePage.setOnClickListener(this);
 
+        for(int i = 0; i < top5Transactions.size(); i++)
+        {
+            firstElement = new TextView(this.getContext());
+            firstElement.setLayoutParams(new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+            firstElement.setText(top5Transactions.get(i).getName());
+            firstElement.setTextSize(14);
+
+            linearLayout = root.findViewById(R.id.recentActivityLayout);
+            linearLayout.addView(firstElement);
+        }
 
         return root;
     }
