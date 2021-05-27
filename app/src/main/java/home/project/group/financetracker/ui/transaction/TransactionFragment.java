@@ -45,11 +45,9 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     private ArrayAdapter<String> dataAdapter;
     private List<String> categories = new ArrayList<>();
     private List<String> types = new ArrayList<>();
-    private final String EXPENSE = "expense";
-    private final String REVENUE = "revenue";
     private String category_txt;
     //By Default, current type is revenue
-    private String currentCategoryType = REVENUE;
+    private String currentCategoryType = "R";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +66,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         addCategory = (Button) root.findViewById(R.id.btnAddCategory);
 
         //Dummy data for categories table
+<<<<<<< Updated upstream
         CategoriesModel categoriesModel1 = new CategoriesModel();
         categoriesModel1.setName("work");
         categoriesModel1.setType(REVENUE);
@@ -89,6 +88,30 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         if (!isDuplicate3) {
             DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel3);
         }
+=======
+//        DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().deleteCategories();
+//        CategoriesModel categoriesModel1 = new CategoriesModel();
+//        categoriesModel1.setName("work");
+//        categoriesModel1.setType("R");
+//        CategoriesModel categoriesModel2 = new CategoriesModel();
+//        categoriesModel2.setName("grocery");
+//        categoriesModel2.setType("E");
+//        CategoriesModel categoriesModel3 = new CategoriesModel();
+//        categoriesModel3.setName("gas");
+//        categoriesModel3.setType("E");
+//        boolean isDuplicate1 = isDuplicateCategory(categoriesModel1);
+//        boolean isDuplicate2 = isDuplicateCategory(categoriesModel2);
+//        boolean isDuplicate3 = isDuplicateCategory(categoriesModel3);
+//        if(!isDuplicate1) {
+//            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel1);
+//        }
+//        if(!isDuplicate2) {
+//            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel2);
+//        }
+//        if(!isDuplicate3) {
+//            DatabaseClass.getDatabase(getActivity().getApplicationContext()).getDao().insertAllCategoriesData(categoriesModel3);
+//        }
+>>>>>>> Stashed changes
 
         // Creating adapter for spinner
         dataAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories);
@@ -147,18 +170,18 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
                 dialog.show();
                 break;
             case R.id.radioBtnExpense:
-                fillAdapter(EXPENSE);
-                currentCategoryType = EXPENSE;
+                fillAdapter("E");
+                currentCategoryType = "E";
                 break;
             case R.id.radioBtnRevenue:
-                fillAdapter(REVENUE);
-                currentCategoryType = REVENUE;
+                fillAdapter("R");
+                currentCategoryType = "R";
                 break;
             case R.id.btnAddCategory:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Add " + (currentCategoryType == EXPENSE ? "an Expense" : "a Revenue") + " Category");
-                types.add(EXPENSE);
-                types.add(REVENUE);
+                builder.setTitle("Add " + (currentCategoryType == "E" ? "an Expense" : "a Revenue") + " Category");
+                types.add("E");
+                types.add("R");
                 final EditText nameInput = new EditText(this.getContext());
                 nameInput.setInputType(InputType.TYPE_CLASS_TEXT);
                 nameInput.setHint("Name");

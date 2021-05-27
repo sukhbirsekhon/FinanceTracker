@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import home.project.group.financetracker.EntityClass.TransactionModel;
@@ -25,12 +26,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     List<TransactionModel> list;
     List<TransactionModel> allData;
     DeleteItemClickListener deleteItemClickListener;
+    UpdateItemClickListener updateItemClickListener;
 
-    public TransactionAdapter(Context context, List<TransactionModel> list, DeleteItemClickListener deleteItemClickListener) {
+    public TransactionAdapter(Context context, List<TransactionModel> list, DeleteItemClickListener deleteItemClickListener, UpdateItemClickListener updateItemClickListener) {
         this.context = context;
         this.list = list;
         allData = new ArrayList<>(list);
         this.deleteItemClickListener = deleteItemClickListener;
+        this.updateItemClickListener = updateItemClickListener;
     }
 
     @NonNull
@@ -58,6 +61,22 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             @Override
             public void onClick(View view) {
                 deleteItemClickListener.onItemDelete(position, list.get(position).getKey());
+            }
+        });
+
+        holder.updateId.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                int key = list.get(position).getKey();
+                String type = list.get(position).getType();
+                String name = list.get(position).getName();
+                String amount = String.valueOf(list.get(position).getAmount());
+                String note = list.get(position).getNote();
+                Date dateObject = list.get(position).getDate();
+                String date = dateObject.getMonth() + "-" + dateObject.getDay() + "-" + dateObject.getYear();
+                String category = list.get(position).getCategory();
+                updateItemClickListener.onItemUpdate(key, type, name, amount, note, date, dateObject, category);
             }
         });
     }
@@ -115,10 +134,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         void onItemDelete(int position, int id);
     }
 
+    public interface UpdateItemClickListener {
+        void onItemUpdate(int key, String type, String name, String amount, String note, String date, Date dateObject, String category);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView name, amount, category;
-        Button deleteId;
+        Button deleteId, updateId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -126,6 +149,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             amount = itemView.findViewById(R.id.txtAmount);
             category = itemView.findViewById(R.id.txtCategory);
             deleteId = itemView.findViewById(R.id.deleteId);
+            updateId = itemView.findViewById(R.id.updateId);
         }
     }
 
