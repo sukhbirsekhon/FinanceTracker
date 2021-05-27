@@ -32,7 +32,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String today;
     private int dd, mm, yy;
     private TextView firstElement;
-    LinearLayout homePageView, popUpTransactionView, linearLayout;
+    LinearLayout popUpTransactionView, linearLayout;
+    RelativeLayout homePageView;
   
     private List<TransactionModel> top5Transactions;
 
