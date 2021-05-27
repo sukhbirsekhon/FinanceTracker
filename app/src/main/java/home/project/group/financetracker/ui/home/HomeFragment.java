@@ -60,15 +60,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         today = "Today is " + date;
         dateTimeDisplay.setText(today);
 
-
-        /*------------------------------*/
-
-        /* Code for extracting the username and creating a welcome message */
-
-        /* I can't add with a name until we complete the registration UI and development. For now, I just have a message using the design code. - Nick */
-
-        /*------------------------------*/
-
         homePageView = root.findViewById(R.id.homePageView);
         popUpTransactionView = root.findViewById(R.id.popUpTransactionView);
         addIcon.setOnClickListener(this);

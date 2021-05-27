@@ -51,6 +51,6 @@ public interface TransactionDao {
     CategoriesModel checkForDuplicateCategory(String name);
 
     //Getting the top 5 most recent transactions - For display on the home page, with most recent on top.
-    @Query("SELECT * FROM TRANSACTIONS LIMIT 5")
+    @Query("SELECT * FROM TRANSACTIONS ORDER BY `key` DESC LIMIT 5")
     List<TransactionModel> getTop5Transactions();
 }
